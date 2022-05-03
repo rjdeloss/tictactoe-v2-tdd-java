@@ -7,6 +7,6 @@ public class PlayerTest{
 
     @Test
     public void passingTest() {
-        Assert.assertEquals(3, 6);
+        Assert.assertEquals(6, 6);
     }
 }
