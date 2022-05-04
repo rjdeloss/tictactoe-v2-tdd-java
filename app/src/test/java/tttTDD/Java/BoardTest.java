@@ -31,5 +31,4 @@ public class BoardTest {
 
         Assert.assertEquals(board.getSpace(2), "X");
     }
-
 }
