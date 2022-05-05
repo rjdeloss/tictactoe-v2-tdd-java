@@ -25,10 +25,17 @@ public class BoardTest {
     }
 
     @Test
-    public void updateBoardSpaceWithNewValue() {
+    public void updateBoardSpaceWithNewValue() throws Exception {
         board = new Board();
         board.updateBoard(2, "X");
 
         Assert.assertEquals(board.getSpace(2), "X");
+    }
+
+    @Test(expected = Exception.class)
+    public void updatingTheSameSpaceWillResultInAnErrorException() throws Exception {
+        board = new Board();
+        board.updateBoard(3, "X");
+        board.updateBoard(3, "O");
     }
 }

@@ -1,5 +1,7 @@
 package tttTDD.Java;
 
+import static java.lang.Integer.parseInt;
+
 public class Board {
     private String[] board;
 
@@ -15,7 +17,15 @@ public class Board {
         return this.board[location];
     }
 
-    public void updateBoard(int location, String marker) {
-        this.board[location] = marker;
+    public void updateBoard(int location, String marker) throws Exception {
+        if (isSpaceAvailable(location)) {
+            this.board[location] = marker;
+        } else {
+            throw new Exception();
+        }
+    }
+
+    private boolean isSpaceAvailable(int location) {
+        return (String.valueOf(location + 1) == getSpace(location));
     }
 }
