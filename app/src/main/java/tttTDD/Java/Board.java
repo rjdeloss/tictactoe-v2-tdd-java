@@ -1,9 +1,7 @@
 package tttTDD.Java;
 
-import static java.lang.Integer.parseInt;
-
 public class Board {
-    private String[] board;
+    private final String[] board;
 
     public Board() {
         this.board = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
@@ -26,6 +24,6 @@ public class Board {
     }
 
     private boolean isSpaceAvailable(int location) {
-        return (String.valueOf(location + 1) == getSpace(location));
+        return (String.valueOf(location + 1).equals(getSpace(location)));
     }
 }
