@@ -1,0 +1,48 @@
+'visit the link to for instructions on how to install GraphViz in order to generate graph within intelliJ https://plantuml.com/graphviz-dot
+@startuml
+
+class Player {
+    -String marker
+    -boolean isComputer
+
+    +Player()
+    +String : getMarker()
+    +boolean : isComputerPlayer()
+}
+
+class Board {
+    -Array[] board
+
+    +Board()
+    +Array[]: getBoard()
+    +String : getSpace(location : int)
+    +void : updateBoard()
+}
+
+class Game {
+    +String currentPlayer
+    -Validation validate
+    -Board board
+    -Player player1
+    -Player player2
+
+    +Game()
+    +void : initializePlayers()
+    +void : initializeGame()
+    +void : nextPlayer()
+    +void : move(currentPlayer)
+    -void : gameloop()
+}
+
+class Validation {
+    -Array[][] winningMoves
+
+    +boolean : someoneHasWon()
+    +boolean : gameIsTied()
+    +boolean : validMove()
+}
+
+Game *-- Player
+Game *-- Board
+Game *-- Validation
+@enduml
