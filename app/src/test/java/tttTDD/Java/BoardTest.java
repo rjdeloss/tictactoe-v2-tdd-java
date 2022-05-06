@@ -15,6 +15,14 @@ public class BoardTest {
     }
 
     @Test
+    public void getBoardInstanceWithResizableBoard() {
+        board = new Board(4);
+        Assert.assertEquals(board.getBoard().length, 16);
+        Assert.assertEquals(board.getSpace(0), "1");
+        Assert.assertEquals(board.getSpace(15), "16");
+    }
+
+    @Test
     public void getBoardSpace() {
         board = new Board();
 

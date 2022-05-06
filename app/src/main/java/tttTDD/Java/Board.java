@@ -1,10 +1,25 @@
 package tttTDD.Java;
 
+import org.checkerframework.common.value.qual.IntRange;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Board {
     private final String[] board;
 
     public Board() {
         this.board = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    }
+
+    public Board(int boardSize) {
+        this.board = new String[boardSize * boardSize];
+        for (int i = 0; i < this.board.length; i++) {
+            this.board[i] = String.valueOf(i + 1);
+        }
     }
 
     public String[] getBoard() {
@@ -19,7 +34,7 @@ public class Board {
         if (isSpaceAvailable(location)) {
             this.board[location] = marker;
         } else {
-            throw new Exception();
+            throw new Exception("The space is already occupied");
         }
     }
 

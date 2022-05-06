@@ -14,7 +14,7 @@ public class PlayerTest{
     }
 
     @Test
-    public void createInstanceOfHumanPlayer() {
+    public void createInstanceOfAPlayer() {
         human = new Player("X", false);
         Assert.assertEquals(human.getMarker(), "X");
     }
@@ -23,6 +23,7 @@ public class PlayerTest{
     public void verifyTheCorrectMarkerHasBeenAssigned() {
         human = new Player("S", false);
         Assert.assertNotEquals(human.getMarker(), "X");
+        Assert.assertEquals(human.getMarker(), "S");
     }
 
     @Test
