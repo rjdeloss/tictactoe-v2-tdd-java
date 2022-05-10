@@ -29,12 +29,12 @@ public class PlayerTest{
     @Test
     public void verifyThePlayerBeingHuman() {
         human = new Human("O");
-        Assert.assertEquals(human.isComputer(), false);
+        Assert.assertFalse(human.isComputer());
     }
 
     @Test
     public void verifyThePlayerBeingAComputer() {
         computer = new Computer("X");
-        Assert.assertEquals(computer.isComputer(), true);
+        Assert.assertTrue(computer.isComputer());
     }
 }
