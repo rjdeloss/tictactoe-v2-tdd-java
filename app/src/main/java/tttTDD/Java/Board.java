@@ -1,13 +1,5 @@
 package tttTDD.Java;
 
-import org.checkerframework.common.value.qual.IntRange;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class Board {
     private final String[] board;
 
