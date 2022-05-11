@@ -1,33 +1,44 @@
 package tttTDD.Java;
 
 public class Board {
+    private final int DEFAULT_SIZE = 3;
     private final String[] board;
 
+
     public Board() {
-        this.board = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        this.board = initializeBoard(DEFAULT_SIZE);
     }
 
     public Board(int boardSize) {
-        this.board = new String[boardSize * boardSize];
-        for (int i = 0; i < this.board.length; i++) {
-            this.board[i] = String.valueOf(i + 1);
-        }
+        this.board = initializeBoard(boardSize);
     }
 
+    // refactor this into the abyss!
     public String[] getBoard() {
         return this.board;
     }
 
+    // how do we handle index out of bounds? exception?
     public String getSpace(int location) {
         return this.board[location];
     }
 
+    // bool return
     public void updateBoard(int location, String marker) throws Exception {
         if (isSpaceAvailable(location)) {
             this.board[location] = marker;
         } else {
             throw new Exception("The space is already occupied");
         }
+    }
+
+    private String[] initializeBoard(int boardSize) {
+        String[] board = new String[boardSize * boardSize];
+        for (int i = 0; i < board.length; i++) {
+            board[i] = String.valueOf(i + 1);
+        }
+
+        return board;
     }
 
     private boolean isSpaceAvailable(int location) {
