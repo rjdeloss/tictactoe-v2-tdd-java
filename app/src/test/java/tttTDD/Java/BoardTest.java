@@ -39,18 +39,20 @@ public class BoardTest {
     }
 
     @Test
-    public void updateBoardSpaceWithNewValue() throws Exception {
+    public void updateBoardSpaceWithNewValue(){
         board = new Board();
-        board.updateBoard(2, "X");
 
+        Assert.assertTrue(board.updateBoard(2, "X"));
         Assert.assertEquals(board.getSpace(2), "X");
     }
 
-    @Test(expected = Exception.class)
-    public void updatingTheSameSpaceWillResultInAnErrorException() throws Exception {
+    @Test
+    public void updatingTheSameSpaceWillResultInAnErrorException() {
         board = new Board();
         board.updateBoard(3, "X");
         board.updateBoard(3, "O");
+
+        Assert.assertFalse(board.updateBoard(3, "O"));
     }
 
     // for each of these horizontal, vertical, top-to-bottom diagonal, bottom-to-top diagonal

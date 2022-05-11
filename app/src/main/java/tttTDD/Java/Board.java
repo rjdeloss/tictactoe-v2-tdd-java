@@ -24,12 +24,13 @@ public class Board {
     }
 
     // bool return
-    public void updateBoard(int location, String marker) throws Exception {
+    public boolean updateBoard(int location, String marker) {
         if (isSpaceAvailable(location)) {
             this.board[location] = marker;
-        } else {
-            throw new Exception("The space is already occupied");
+            return true;
         }
+
+        return false;
     }
 
     private String[] initializeBoard(int boardSize) {
