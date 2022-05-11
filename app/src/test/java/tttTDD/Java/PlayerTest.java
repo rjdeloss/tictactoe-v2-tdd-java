@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PlayerTest{
+public class PlayerTest {
     Human human;
     Computer computer;
 
@@ -35,6 +35,8 @@ public class PlayerTest{
     @Test
     public void verifyThePlayerBeingAComputer() {
         computer = new Computer("X");
+
+        Assert.assertEquals(computer.getMarker(), "X");
         Assert.assertTrue(computer.isComputer());
     }
 }

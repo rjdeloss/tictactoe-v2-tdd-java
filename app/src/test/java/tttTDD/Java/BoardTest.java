@@ -11,19 +11,15 @@ public class BoardTest {
     public void getBoardInstanceWithCorrectDefaultLengthOf3() {
         board = new Board(3);
 
-        Assert.assertEquals(board.getBoard().length, 9);
+        Assert.assertEquals(board.getSpace(0), "1");
+        Assert.assertEquals(board.getSpace(8), "9");
     }
 
     @Test
     public void getBoardInstanceWithResizableBoard() {
-        // Arrange
-
-        // Act
         board = new Board(4);
 
-
         // Assert
-        Assert.assertEquals(board.getBoard().length, 16);
         Assert.assertEquals(board.getSpace(0), "1");
         Assert.assertEquals(board.getSpace(15), "16");
     }
@@ -36,6 +32,14 @@ public class BoardTest {
         Assert.assertNotEquals(board.getSpace(5), "5");
         Assert.assertEquals(board.getSpace(3), "4");
         Assert.assertEquals(board.getSpace(8), "9");
+    }
+
+    @Test
+    public void checkIfLocationIsOutOfBounds() {
+        board = new Board(3);
+
+        Assert.assertNull(board.getSpace(9));
+        Assert.assertNull(board.getSpace(16));
     }
 
     @Test
