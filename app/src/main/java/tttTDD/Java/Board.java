@@ -86,4 +86,5 @@ public class Board {
 
         return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), String[].class);
     }
+
 }

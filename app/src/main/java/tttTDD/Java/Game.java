@@ -16,19 +16,20 @@ public class Game {
         currentPlayer = player1;
         gameCompleted = false;
     }
-
+    // humanPlayer.move(int) => return int
+    // list all the things that it does and all the things that it needs
     public boolean performMove(int playerInput) {
         if (!currentPlayer.isComputer()) {
             board.updateBoard(playerInput, currentPlayer.getMarker());
         } else {
             board.updateBoard(board.getFirstAvailableMove(), currentPlayer.getMarker());
         }
-        gameCompleted = hasGameConcluded();
+        gameCompleted = gameHasWinner();
         swap();
         return true;
     }
 
-    private boolean hasGameConcluded() {
+    private boolean gameHasWinner() {
         if (board.hasWinningSet()) {
             gameWinner = String.format("Player %s has won", currentPlayer.getMarker());
         }
