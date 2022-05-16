@@ -1,9 +1,13 @@
 package tttTDD.Java;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Board {
     private final int DEFAULT_SIZE = 3;
     private final String[] board;
     private int numberOfSpaces;
+    private String[] availableMoves;
 
 
     public Board() {
@@ -16,6 +20,11 @@ public class Board {
 
     public String getSpace(int location) {
         return isLocationValid(location) ? null : this.board[location];
+    }
+
+    public int getFirstAvailableMoves() {
+        availableMoves = getAvailableMoves(board);
+        return convertToLocation(availableMoves[0]);
     }
 
     public boolean updateBoard(int location, String marker) {
@@ -41,7 +50,23 @@ public class Board {
         return (String.valueOf(location + 1).equals(getSpace(location)));
     }
 
+    private int convertToLocation(String space) {
+        return Integer.parseInt(space) - 1;
+    }
+
     private boolean isLocationValid(int location) {
         return (location < 0) || (location > numberOfSpaces - 1);
+    }
+
+    private String[] getAvailableMoves(String[] board) {
+        ArrayList<String> availableMovesArray = new ArrayList<String>();
+
+        for (int i = 0; i < board.length; i++) {
+            if (isSpaceAvailable(i)) {
+                availableMovesArray.add(board[i]);
+            }
+        }
+
+        return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), String[].class);
     }
 }
