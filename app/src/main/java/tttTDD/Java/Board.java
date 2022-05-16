@@ -7,8 +7,16 @@ public class Board {
     private final int DEFAULT_SIZE = 3;
     private final String[] board;
     private int numberOfSpaces;
-    private String[] availableMoves;
-
+    private int[][] winningSets = {
+            {0, 1, 2},
+            {3, 4, 5},
+            {6, 7, 8},
+            {0, 3, 6},
+            {1, 4, 7},
+            {2, 5, 8},
+            {0, 4, 8},
+            {2, 4, 6},
+    };
 
     public Board() {
         this.board = initializeBoard(DEFAULT_SIZE);
@@ -23,7 +31,7 @@ public class Board {
     }
 
     public int getFirstAvailableMove() {
-        availableMoves = getAvailableMoves(board);
+        String[] availableMoves = getAvailableMoves(board);
         return convertToLocation(availableMoves[0]);
     }
 
@@ -33,6 +41,15 @@ public class Board {
             return true;
         }
 
+        return false;
+    }
+
+    public boolean hasWinningSet() {
+        for (int[] set : winningSets) {
+            if (board[set[0]].equals(board[set[1]]) && board[set[1]].equals(board[set[2]])) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -59,7 +76,7 @@ public class Board {
     }
 
     private String[] getAvailableMoves(String[] board) {
-        ArrayList<String> availableMovesArray = new ArrayList<String>();
+        ArrayList<String> availableMovesArray = new ArrayList<>();
 
         for (int i = 0; i < board.length; i++) {
             if (isSpaceAvailable(i)) {

@@ -7,12 +7,14 @@ public class Game {
     Player player1;
     Player player2;
     Player currentPlayer;
-//    GameConfiguration gameConfig = new GameConfiguration(3, true);
+    boolean gameCompleted;
+    String gameWinner;
 
     public Game(GameConfiguration gameConfig) {
         board = new Board(gameConfig.getBoardSizeConfiguration());
         initializePlayers(gameConfig.isComputerPlaying());
         currentPlayer = player1;
+        gameCompleted = false;
     }
 
     public boolean performMove(int playerInput) {
@@ -21,8 +23,17 @@ public class Game {
         } else {
             board.updateBoard(board.getFirstAvailableMove(), currentPlayer.getMarker());
         }
+        gameCompleted = hasGameConcluded();
         swap();
         return true;
+    }
+
+    private boolean hasGameConcluded() {
+        if (board.hasWinningSet()) {
+            gameWinner = String.format("Player %s has won", currentPlayer.getMarker());
+        }
+
+        return board.hasWinningSet();
     }
 
     private void initializePlayers(boolean areWePlayingComputer) {
