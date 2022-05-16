@@ -5,9 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import tttTDD.Java.Interfaces.Player;
 
-import javax.swing.*;
-import java.lang.module.Configuration;
-
 public class GameTest {
     Game game;
     GameConfiguration gameConfig;
@@ -76,5 +73,15 @@ public class GameTest {
         game.performMove(9);
 
         Assert.assertEquals(game.board.getSpace(4), game.player2.getMarker());
+    }
+
+    @Test
+    public void GameShouldProvideFirstAvailableMoveForComputerPlayerFromTheBoard() {
+        int playerInput = 0;
+        game = new Game(gameConfig);
+
+        game.performMove(playerInput);
+
+        Assert.assertEquals(game.board.getFirstAvailableMove(), 1);
     }
 }

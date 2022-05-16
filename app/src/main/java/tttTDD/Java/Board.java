@@ -22,7 +22,7 @@ public class Board {
         return isLocationValid(location) ? null : this.board[location];
     }
 
-    public int getFirstAvailableMoves() {
+    public int getFirstAvailableMove() {
         availableMoves = getAvailableMoves(board);
         return convertToLocation(availableMoves[0]);
     }

@@ -19,7 +19,7 @@ public class Game {
         if (!currentPlayer.isComputer()) {
             board.updateBoard(playerInput, currentPlayer.getMarker());
         } else {
-            board.updateBoard(board.getFirstAvailableMoves(), currentPlayer.getMarker());
+            board.updateBoard(board.getFirstAvailableMove(), currentPlayer.getMarker());
         }
         swap();
         return true;
