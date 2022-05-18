@@ -85,85 +85,85 @@ public class GameTest {
         Assert.assertEquals(game.board.getFirstAvailableMove(), 1);
     }
 
-    @Test
-    public void ChangeGameStateGameCompletedToTrueIfWinningSetFound() {
-        game = new Game(gameConfig);
+//    @Test
+//    public void ChangeGameStateGameCompletedToTrueIfWinningSetFound() {
+//        game = new Game(gameConfig);
+//
+//        int humanInput1 = 0;
+//        int computerInput1 = 1;
+//        int humanInput2 = 3;
+//        int computerInput2 = 2;
+//        int humanInput3 = 6;
+//
+//        game.performMove(humanInput1);
+//        game.performMove(computerInput1);
+//        game.performMove(humanInput2);
+//        game.performMove(computerInput2);
+//        game.performMove(humanInput3);
+//
+//        Assert.assertTrue(game.gameCompleted);
+//    }
 
-        int humanInput1 = 0;
-        int computerInput1 = 1;
-        int humanInput2 = 3;
-        int computerInput2 = 2;
-        int humanInput3 = 6;
+//    @Test
+//    public void ChangeGameStateGameCompletedToFalseIfWinningSetNotFound() {
+//        game = new Game(gameConfig);
+//
+//        int humanInput1 = 8;
+//        int computerInput1 = 1;
+//        int humanInput2 = 3;
+//        int computerInput2 = 2;
+//
+//        game.performMove(humanInput1);
+//        game.performMove(computerInput1);
+//        game.performMove(humanInput2);
+//        game.performMove(computerInput2);
+//
+//        Assert.assertFalse(game.gameCompleted);
+//    }
 
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
-
-        Assert.assertTrue(game.gameCompleted);
-    }
-
-    @Test
-    public void ChangeGameStateGameCompletedToFalseIfWinningSetNotFound() {
-        game = new Game(gameConfig);
-
-        int humanInput1 = 8;
-        int computerInput1 = 1;
-        int humanInput2 = 3;
-        int computerInput2 = 2;
-
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-
-        Assert.assertFalse(game.gameCompleted);
-    }
-
-    @Test
-    public void GameShouldListIfTheGameHasConcludedAndWinner() {
-        game = new Game(gameConfig);
-
-        int humanInput1 = 0;
-        int computerInput1 = 1;
-        int humanInput2 = 3;
-        int computerInput2 = 2;
-        int humanInput3 = 6;
-
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
-
-        Assert.assertTrue(game.gameCompleted);
-        Assert.assertEquals(game.gameWinner, "Player X has won");
-    }
-
-    @Test
-    public void GameShouldListIfTheGameHasConcludedAndAComputerWon() {
-        game = new Game(gameConfig);
-
-        int humanInput1 = 0;
-        int computerInput1 = 1;
-        int humanInput2 = 3;
-        int computerInput2 = 2;
-        int humanInput3 = 5;
-        int computerInput3 = 4;
-        int humanInput4 = 8;
-        int computerInput4 = 7;
-
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
-        game.performMove(computerInput3);
-        game.performMove(humanInput4);
-        game.performMove(computerInput4);
-
-        Assert.assertTrue(game.gameCompleted);
-        Assert.assertEquals(game.gameWinner, "Player O has won");
-    }
+//    @Test
+//    public void GameShouldListIfTheGameHasConcludedAndWinner() {
+//        game = new Game(gameConfig);
+//
+//        int humanInput1 = 0;
+//        int computerInput1 = 1;
+//        int humanInput2 = 3;
+//        int computerInput2 = 2;
+//        int humanInput3 = 6;
+//
+//        game.performMove(humanInput1);
+//        game.performMove(computerInput1);
+//        game.performMove(humanInput2);
+//        game.performMove(computerInput2);
+//        game.performMove(humanInput3);
+//
+//        Assert.assertTrue(game.gameCompleted);
+//        Assert.assertEquals(game.gameWinner, "Player X has won");
+//    }
+//
+//    @Test
+//    public void GameShouldListIfTheGameHasConcludedAndAComputerWon() {
+//        game = new Game(gameConfig);
+//
+//        int humanInput1 = 0;
+//        int computerInput1 = 1;
+//        int humanInput2 = 3;
+//        int computerInput2 = 2;
+//        int humanInput3 = 5;
+//        int computerInput3 = 4;
+//        int humanInput4 = 8;
+//        int computerInput4 = 7;
+//
+//        game.performMove(humanInput1);
+//        game.performMove(computerInput1);
+//        game.performMove(humanInput2);
+//        game.performMove(computerInput2);
+//        game.performMove(humanInput3);
+//        game.performMove(computerInput3);
+//        game.performMove(humanInput4);
+//        game.performMove(computerInput4);
+//
+//        Assert.assertTrue(game.gameCompleted);
+//        Assert.assertEquals(game.gameWinner, "Player O has won");
+//    }
 }

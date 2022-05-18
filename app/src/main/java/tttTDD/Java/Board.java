@@ -55,6 +55,7 @@ public class Board {
 
     private String[] initializeBoard(int boardSize) {
         numberOfSpaces = boardSize * boardSize;
+
         String[] board = new String[numberOfSpaces];
         for (int i = 0; i < board.length; i++) {
             board[i] = String.valueOf(i + 1);
@@ -85,6 +86,50 @@ public class Board {
         }
 
         return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), String[].class);
+//        return Arrays.stream(board).filter(space -> isSpaceAvailable(Integer.parseInt(space))).toArray(String[]::new);
     }
 
+    private int[][] createWinningSet(int boardSize) {
+        int[][] winningSets = new int[(boardSize * 2) + 2][boardSize];
+        int location = 0;
+        int k = 0;
+        int d = 0;
+
+        for(int i = 0; i < boardSize; i++) {
+            for(int j = 0; j < boardSize; j++) {
+                winningSets[i][j] = location;
+                location++;
+            }
+        }
+
+        for(int i = boardSize; i < boardSize*2; i++) {
+            for(int j = 0; j < boardSize; j++ ) {
+                winningSets[i][j] = winningSets[j][k];
+            }
+            k++;
+        }
+
+        for(int i = boardSize * 2 ; i < boardSize * 2 + 1; i++) {
+            for(int j = 0; j < boardSize; j++) {
+                winningSets[i][j] = winningSets[j][d++];
+            }
+            d--;
+        }
+
+        System.out.println(d);
+
+        for(int i = boardSize * 2 + 1; i < boardSize * 2 + 2; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                winningSets[i][j] = winningSets[j][d--];
+
+            }
+        }
+
+        for(int[] set: winningSets) {
+            for(int cell : set) {
+                System.out.println(cell);
+            }
+        }
+        return winningSets;
+    }
 }

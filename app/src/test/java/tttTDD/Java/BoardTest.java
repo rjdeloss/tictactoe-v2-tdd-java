@@ -54,7 +54,6 @@ public class BoardTest {
     public void updatingTheSameSpaceWillResultInAnErrorException() {
         board = new Board();
         board.updateBoard(3, "X");
-        board.updateBoard(3, "O");
 
         Assert.assertFalse(board.updateBoard(3, "O"));
     }
