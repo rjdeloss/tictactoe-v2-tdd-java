@@ -58,6 +58,98 @@ public class BoardTest {
         Assert.assertFalse(board.updateBoard(3, "O"));
     }
 
+    @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf3x3Board() {
+        board = new Board();
+        board.updateBoard(0, "X");
+        board.updateBoard(1, "X");
+        board.updateBoard(2, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnMiddleRowOf3x3Board() {
+        board = new Board();
+        board.updateBoard(3, "X");
+        board.updateBoard(4, "X");
+        board.updateBoard(5, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnBottomRowOf3x3Board() {
+        board = new Board();
+        board.updateBoard(6, "X");
+        board.updateBoard(7, "X");
+        board.updateBoard(8, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnLeftColumnOf3x3Board() {
+        board = new Board();
+        board.updateBoard(0, "X");
+        board.updateBoard(3, "X");
+        board.updateBoard(6, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnMiddleColumnOf3x3Board() {
+        board = new Board();
+        board.updateBoard(0, "X");
+        board.updateBoard(3, "X");
+        board.updateBoard(6, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnRightColumnOf3x3Board() {
+        board = new Board();
+        board.updateBoard(2, "X");
+        board.updateBoard(5, "X");
+        board.updateBoard(8, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnLeftDiagonalOf3x3Board() {
+        board = new Board();
+        board.updateBoard(0, "X");
+        board.updateBoard(4, "X");
+        board.updateBoard(8, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnRightDiagonalOf3x3Board() {
+        board = new Board();
+        board.updateBoard(2, "X");
+        board.updateBoard(4, "X");
+        board.updateBoard(6, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf5x5Board() {
+        board = new Board(5);
+        board.updateBoard(0, "X");
+        board.updateBoard(1, "X");
+        board.updateBoard(2, "X");
+        board.updateBoard(3, "X");
+        board.updateBoard(4, "X");
+
+        Assert.assertTrue(board.hasWinningSet());
+    }
+
     // for each of these horizontal, vertical, top-to-bottom diagonal, bottom-to-top diagonal
     // validate player win on 3x3
     // validate player win on 4x4

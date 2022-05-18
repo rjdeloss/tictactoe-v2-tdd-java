@@ -7,23 +7,17 @@ public class Board {
     private final int DEFAULT_SIZE = 3;
     private final String[] board;
     private int numberOfSpaces;
-    private int[][] winningSets = {
-            {0, 1, 2},
-            {3, 4, 5},
-            {6, 7, 8},
-            {0, 3, 6},
-            {1, 4, 7},
-            {2, 5, 8},
-            {0, 4, 8},
-            {2, 4, 6},
-    };
+    private int[][] winningSets;
 
     public Board() {
         this.board = initializeBoard(DEFAULT_SIZE);
+        this.winningSets = createWinningSet(DEFAULT_SIZE);
+
     }
 
     public Board(int boardSize) {
         this.board = initializeBoard(boardSize);
+        this.winningSets = createWinningSet(boardSize);
     }
 
     public String getSpace(int location) {
@@ -45,7 +39,7 @@ public class Board {
     }
 
     public boolean hasWinningSet() {
-        for (int[] set : winningSets) {
+        for (int[] set : this.winningSets) {
             if (board[set[0]].equals(board[set[1]]) && board[set[1]].equals(board[set[2]])) {
                 return true;
             }
@@ -86,7 +80,7 @@ public class Board {
         }
 
         return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), String[].class);
-//        return Arrays.stream(board).filter(space -> isSpaceAvailable(Integer.parseInt(space))).toArray(String[]::new);
+//        return Arrays.stream(board).filter((space) -> isSpaceAvailable(board.index)).toArray(String[]::new);
     }
 
     private int[][] createWinningSet(int boardSize) {
@@ -116,7 +110,6 @@ public class Board {
             d--;
         }
 
-        System.out.println(d);
 
         for(int i = boardSize * 2 + 1; i < boardSize * 2 + 2; i++) {
             for (int j = 0; j < boardSize; j++) {
