@@ -65,7 +65,7 @@ public class BoardTest {
         board.updateBoard(1, "X");
         board.updateBoard(2, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BoardTest {
         board.updateBoard(4, "X");
         board.updateBoard(5, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class BoardTest {
         board.updateBoard(7, "X");
         board.updateBoard(8, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class BoardTest {
         board.updateBoard(3, "X");
         board.updateBoard(6, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class BoardTest {
         board.updateBoard(3, "X");
         board.updateBoard(6, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class BoardTest {
         board.updateBoard(5, "X");
         board.updateBoard(8, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class BoardTest {
         board.updateBoard(4, "X");
         board.updateBoard(8, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class BoardTest {
         board.updateBoard(4, "X");
         board.updateBoard(6, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
     @Test
@@ -147,11 +147,30 @@ public class BoardTest {
         board.updateBoard(3, "X");
         board.updateBoard(4, "X");
 
-        Assert.assertTrue(board.hasWinningSet());
+        Assert.assertTrue(board.hasWinningSet("X"));
     }
 
-    // for each of these horizontal, vertical, top-to-bottom diagonal, bottom-to-top diagonal
-    // validate player win on 3x3
-    // validate player win on 4x4
-    // validate player win on 100x100
+    @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf2x2Board() {
+        board = new Board(2);
+
+        board.updateBoard(0, "X");
+        board.updateBoard(1, "X");
+
+        Assert.assertTrue(board.hasWinningSet("X"));
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnLeftDiagonalOf6x6Board() {
+        board = new Board(6);
+        board.updateBoard(0, "X");
+        board.updateBoard(7, "X");
+        board.updateBoard(14, "X");
+        board.updateBoard(21, "X");
+        board.updateBoard(28, "X");
+        board.updateBoard(35, "X");
+
+
+        Assert.assertTrue(board.hasWinningSet("X"));
+    }
 }

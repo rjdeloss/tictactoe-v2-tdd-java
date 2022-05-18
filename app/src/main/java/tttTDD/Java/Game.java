@@ -30,11 +30,11 @@ public class Game {
     }
 
     private boolean gameHasWinner() {
-        if (board.hasWinningSet()) {
+        if (board.hasWinningSet(currentPlayer.getMarker())) {
             gameWinner = String.format("Player %s has won", currentPlayer.getMarker());
         }
 
-        return board.hasWinningSet();
+        return board.hasWinningSet(currentPlayer.getMarker());
     }
 
     private void initializePlayers(boolean areWePlayingComputer) {

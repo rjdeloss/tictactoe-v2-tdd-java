@@ -38,12 +38,15 @@ public class Board {
         return false;
     }
 
-    public boolean hasWinningSet() {
+    public boolean hasWinningSet(String marker) {
         for (int[] set : this.winningSets) {
-            if (board[set[0]].equals(board[set[1]]) && board[set[1]].equals(board[set[2]])) {
-                return true;
+            String[] movesBeingChecked = mapBoardMovesToSet(set);
+
+            if (Arrays.stream(movesBeingChecked).allMatch(space -> marker.equals(space))) {
+              return true;
             }
         }
+
         return false;
     }
 
@@ -83,6 +86,16 @@ public class Board {
 //        return Arrays.stream(board).filter((space) -> isSpaceAvailable(board.index)).toArray(String[]::new);
     }
 
+    private String[] mapBoardMovesToSet(int[] set) {
+        String[] setBeingChecked = new String[set.length];
+
+        for (int i = 0; i < set.length; i++) {
+            setBeingChecked[i] = board[set[i]];
+        }
+
+        return setBeingChecked;
+    }
+
     private int[][] createWinningSet(int boardSize) {
         int[][] winningSets = new int[(boardSize * 2) + 2][boardSize];
         int location = 0;
@@ -118,11 +131,6 @@ public class Board {
             }
         }
 
-        for(int[] set: winningSets) {
-            for(int cell : set) {
-                System.out.println(cell);
-            }
-        }
         return winningSets;
     }
 }
