@@ -3,12 +3,13 @@ package tttTDD.Java;
 import tttTDD.Java.Interfaces.Player;
 
 public class Game {
-    Board board;
-    Player player1;
-    Player player2;
-    Player currentPlayer;
-    boolean gameCompleted;
-    String gameWinner;
+    private Player currentPlayer;
+    private boolean gameCompleted;
+    private String gameWinner;
+    private Board board;
+    private Player player1;
+    private Player player2;
+
 
     public Game(GameConfiguration gameConfig) {
         board = new Board(gameConfig.getBoardSizeConfiguration());
@@ -16,6 +17,43 @@ public class Game {
         currentPlayer = player1;
         gameCompleted = false;
     }
+
+    public boolean isTheGameComplete() {
+        return gameCompleted;
+    }
+
+    public String wonBy() {
+        return  gameWinner;
+    }
+
+    public String getPlayer1Marker() {
+        return player1.getMarker();
+    }
+
+    public String getPlayer2Marker() {
+        return player2.getMarker();
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public boolean checkPlayer1AIStatus() {
+        return player1.isComputer();
+    }
+
+    public boolean checkPlayer2AIStatus() {
+        return player2.isComputer();
+    }
+
+    public String getBoardSpace(int location) {
+        return  board.getSpace(location);
+    }
+
+    public int getBoardFirstAvailableMove() {
+        return board.getFirstAvailableMove();
+    }
+
     // humanPlayer.move(int) => return int
     // list all the things that it does and all the things that it needs
     public boolean performMove(int playerInput) {
@@ -26,7 +64,6 @@ public class Game {
         } else {
             return false;
         }
-
 
         gameCompleted = gameHasWinner();
         return true;

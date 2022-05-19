@@ -8,10 +8,14 @@ import tttTDD.Java.Interfaces.Player;
 public class GameTest {
     Game game;
     GameConfiguration gameConfig;
+    Player player1;
+    Player player2;
 
     @Before
     public void setup() {
         gameConfig = new GameConfiguration(3, true);
+        player1 = new Human("X");
+        player2 = new Computer("O");
     }
 
     @Test
@@ -24,7 +28,8 @@ public class GameTest {
         game.performMove(playerInput);
 
         // Assert
-        Assert.assertEquals(game.board.getSpace(playerInput), game.player1.getMarker());
+        Assert.assertNotEquals(game.performMove(playerInput), false);
+//        Assert.assertEquals(game.board.getSpace(playerInput), game.getPlayerMarker(player1));
     }
 
     @Test
@@ -33,18 +38,19 @@ public class GameTest {
         game = new Game(gameConfig);
 
         // Act
-        Player playerMakingMove = game.currentPlayer;
+        Player playerMakingMove = game.getCurrentPlayer();
         game.performMove(playerInput);
+        Player nextPlayer = game.getCurrentPlayer();
 
         // Assert
-        Assert.assertNotEquals(playerMakingMove.getMarker(), game.currentPlayer.getMarker());
+        Assert.assertNotEquals(playerMakingMove.getMarker(), nextPlayer.getMarker());
     }
 
     @Test
     public void GameShouldGenerateComputerPlayerAsSecondPlayerIfConfigFlagIsTrue(){
         game = new Game(gameConfig);
 
-        Assert.assertTrue(game.player2.isComputer());
+        Assert.assertTrue(game.checkPlayer2AIStatus());
     }
 
     @Test
@@ -55,7 +61,7 @@ public class GameTest {
         game.performMove(playerInput);
         game.performMove(2);
 
-        Assert.assertEquals(game.board.getSpace(0), game.player2.getMarker());
+        Assert.assertEquals(game.getBoardSpace(0), game.getPlayer2Marker());
     }
 
     @Test
@@ -72,7 +78,7 @@ public class GameTest {
         game.performMove(playerInput3);
         game.performMove(9);
 
-        Assert.assertEquals(game.board.getSpace(4), game.player2.getMarker());
+        Assert.assertEquals(game.getBoardSpace(4), game.getPlayer2Marker());
     }
 
     @Test
@@ -82,7 +88,7 @@ public class GameTest {
 
         game.performMove(playerInput);
 
-        Assert.assertEquals(game.board.getFirstAvailableMove(), 1);
+        Assert.assertEquals(game.getBoardFirstAvailableMove(), 1);
     }
 
 //    @Test
