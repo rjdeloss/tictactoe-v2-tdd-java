@@ -19,13 +19,16 @@ public class Game {
     // humanPlayer.move(int) => return int
     // list all the things that it does and all the things that it needs
     public boolean performMove(int playerInput) {
-        if (!currentPlayer.isComputer()) {
-            board.updateBoard(playerInput, currentPlayer.getMarker());
+        int input = !currentPlayer.isComputer() ? playerInput : board.getFirstAvailableMove();
+
+        if (board.updateBoard(input, currentPlayer.getMarker())) {
+            swap();
         } else {
-            board.updateBoard(board.getFirstAvailableMove(), currentPlayer.getMarker());
+            return false;
         }
+
+
         gameCompleted = gameHasWinner();
-        swap();
         return true;
     }
 

@@ -7,7 +7,7 @@ public class Board {
     private final int DEFAULT_SIZE = 3;
     private final String[] board;
     private int numberOfSpaces;
-    private int[][] winningSets;
+    private final int[][] winningSets;
 
     public Board() {
         this.board = initializeBoard(DEFAULT_SIZE);
@@ -42,7 +42,7 @@ public class Board {
         for (int[] set : this.winningSets) {
             String[] movesBeingChecked = mapBoardMovesToSet(set);
 
-            if (Arrays.stream(movesBeingChecked).allMatch(space -> marker.equals(space))) {
+            if (Arrays.stream(movesBeingChecked).allMatch(marker::equals)) {
               return true;
             }
         }
@@ -97,11 +97,18 @@ public class Board {
     }
 
     private int[][] createWinningSet(int boardSize) {
-        int[][] winningSets = new int[(boardSize * 2) + 2][boardSize];
-        int location = 0;
-        int k = 0;
-        int d = 0;
+        int totalPossibleSets = boardSize + boardSize + 2;
+        int[][] winningSets = new int[totalPossibleSets][boardSize];
 
+        int location = 0;
+        // fills the first boardSize positions in winningSets with the horizontal winners.
+        /* winningSets = {
+            {0, 1, 2}
+            {3, 4, 5}
+            {6, 7, 8}
+            ...
+          }
+        */
         for(int i = 0; i < boardSize; i++) {
             for(int j = 0; j < boardSize; j++) {
                 winningSets[i][j] = location;
@@ -109,26 +116,43 @@ public class Board {
             }
         }
 
-        for(int i = boardSize; i < boardSize*2; i++) {
+        int vertical = 0;
+        // fills the first boardSize positions in winningSets with the vertical winners.
+        /* winningSets = {
+            ...
+            {0, 3, 6}
+            {1, 4, 7}
+            {2, 6, 8}
+            ...
+          }
+        */
+        for(int i = boardSize; i < totalPossibleSets - 2; i++) {
             for(int j = 0; j < boardSize; j++ ) {
-                winningSets[i][j] = winningSets[j][k];
+                winningSets[i][j] = winningSets[j][vertical];
             }
-            k++;
+            vertical++;
         }
 
-        for(int i = boardSize * 2 ; i < boardSize * 2 + 1; i++) {
-            for(int j = 0; j < boardSize; j++) {
-                winningSets[i][j] = winningSets[j][d++];
-            }
-            d--;
+        int diagonal = 0;
+        // fills the first boardSize positions in winningSets with the diagonal winners.
+        /* winningSets = {
+            ...
+            {0, 4, 8}
+            {2, 4, 6}
+            ...
+          }
+        */
+
+        for(int j = 0; j < boardSize; j++) {
+            winningSets[totalPossibleSets - 2][j] = winningSets[j][diagonal];
+            diagonal++;
         }
 
+        diagonal--;
 
-        for(int i = boardSize * 2 + 1; i < boardSize * 2 + 2; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                winningSets[i][j] = winningSets[j][d--];
-
-            }
+        for (int j = 0; j < boardSize; j++) {
+            winningSets[totalPossibleSets - 1][j] = winningSets[j][diagonal];
+            diagonal--;
         }
 
         return winningSets;

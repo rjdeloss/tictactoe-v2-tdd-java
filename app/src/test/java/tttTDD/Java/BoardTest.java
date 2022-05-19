@@ -8,8 +8,8 @@ public class BoardTest {
     Board board;
 
     @Test
-    public void getBoardInstanceWithCorrectDefaultLengthOf3() {
-        board = new Board(3);
+    public void getBoardInstanceWithaTotalOf9Spaces() {
+        board = new Board();
 
         Assert.assertEquals(board.getSpace(0), "1");
         Assert.assertEquals(board.getSpace(8), "9");
@@ -26,7 +26,7 @@ public class BoardTest {
 
     @Test
     public void getBoardSpace() {
-        board = new Board(3);
+        board = new Board();
 
         Assert.assertEquals(board.getSpace(5), "6");
         Assert.assertNotEquals(board.getSpace(5), "5");
