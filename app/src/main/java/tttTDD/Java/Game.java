@@ -58,7 +58,7 @@ public class Game {
         int input = !currentPlayer.isComputer() ? playerInput : board.getFirstAvailableMove();
 
         if (board.updateBoard(input, currentPlayer.getMarker())) {
-            gameCompleted = gameHasWinner();
+            gameCompleted = gameHasFinished();
             swap();
         } else {
             return false;
@@ -67,11 +67,21 @@ public class Game {
         return true;
     }
 
-    private boolean gameHasWinner() {
-        if (board.hasWinningSet(currentPlayer.getMarker())) {
+    private boolean gameHasFinished() {
+        if (isThereAWinner() && !isThereATie()) {
             gameWinner = String.format("Player %s has won", currentPlayer.getMarker());
+        } else {
+            gameWinner ="";
         }
 
+        return isThereAWinner() || isThereATie();
+    }
+
+    private boolean isThereATie() {
+        return board.hasNoMoreMoves() && (!isThereAWinner());
+    }
+
+    private boolean isThereAWinner() {
         return board.hasWinningSet(currentPlayer.getMarker());
     }
 

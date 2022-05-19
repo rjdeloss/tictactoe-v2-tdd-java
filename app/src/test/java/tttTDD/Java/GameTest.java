@@ -172,4 +172,32 @@ public class GameTest {
         Assert.assertTrue(game.isTheGameComplete());
         Assert.assertEquals(game.wonBy(), "Player O has won");
     }
+
+    @Test
+    public void GameShouldNotListWinnerIfTheGameConcludedAsATie() {
+        game = new Game(gameConfig);
+
+        int humanInput1 = 4;
+        int computerInput1 = 0;
+        int humanInput2 = 1;
+        int computerInput2 = 2;
+        int humanInput3 = 6;
+        int computerInput3 = 3;
+        int humanInput4 = 5;
+        int computerInput4 = 7;
+        int humanInput5 = 8;
+
+        game.performMove(humanInput1);
+        game.performMove(computerInput1);
+        game.performMove(humanInput2);
+        game.performMove(computerInput2);
+        game.performMove(humanInput3);
+        game.performMove(computerInput3);
+        game.performMove(humanInput4);
+        game.performMove(computerInput4);
+        game.performMove(humanInput5);
+
+        Assert.assertTrue(game.isTheGameComplete());
+        Assert.assertEquals(game.wonBy(), "");
+    }
 }
