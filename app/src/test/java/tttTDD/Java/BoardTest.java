@@ -8,11 +8,14 @@ public class BoardTest {
     Board board;
 
     @Test
-    public void getBoardInstanceWithaTotalOf9Spaces() {
+    public void getBoardInstanceWithATotalOf9Spaces() {
         board = new Board();
 
         Assert.assertEquals(board.getSpace(0), "1");
         Assert.assertEquals(board.getSpace(8), "9");
+        Assert.assertNull(board.getSpace(-1));
+        Assert.assertNull(board.getSpace(9));
+        Assert.assertNull(board.getSpace(100));
     }
 
     @Test
@@ -169,7 +172,6 @@ public class BoardTest {
         board.updateBoard(21, "X");
         board.updateBoard(28, "X");
         board.updateBoard(35, "X");
-
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }

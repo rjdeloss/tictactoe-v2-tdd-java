@@ -83,7 +83,6 @@ public class Board {
         }
 
         return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), String[].class);
-//        return Arrays.stream(board).filter((space) -> isSpaceAvailable(board.index)).toArray(String[]::new);
     }
 
     private String[] mapBoardMovesToSet(int[] set) {
