@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PlayerTest{
-    Player human;
-    Player computer;
+public class PlayerTest {
+    Human human;
+    Computer computer;
 
     @Before
     public void setup() {
@@ -15,26 +15,28 @@ public class PlayerTest{
 
     @Test
     public void createInstanceOfAPlayer() {
-        human = new Player("X", false);
+        human = new Human("X");
         Assert.assertEquals(human.getMarker(), "X");
     }
 
     @Test
     public void verifyTheCorrectMarkerHasBeenAssigned() {
-        human = new Player("S", false);
+        human = new Human("S");
         Assert.assertNotEquals(human.getMarker(), "X");
         Assert.assertEquals(human.getMarker(), "S");
     }
 
     @Test
     public void verifyThePlayerBeingHuman() {
-        human = new Player("O", false);
-        Assert.assertEquals(human.isComputer(), false);
+        human = new Human("O");
+        Assert.assertFalse(human.isComputer());
     }
 
     @Test
     public void verifyThePlayerBeingAComputer() {
-        computer = new Player("X", true);
-        Assert.assertEquals(computer.isComputer(), true);
+        computer = new Computer("X");
+
+        Assert.assertEquals(computer.getMarker(), "X");
+        Assert.assertTrue(computer.isComputer());
     }
 }

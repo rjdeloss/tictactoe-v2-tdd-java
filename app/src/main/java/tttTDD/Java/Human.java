@@ -1,12 +1,11 @@
 package tttTDD.Java;
+import tttTDD.Java.Interfaces.Player;
 
-public class Player {
+public class Human implements Player {
     private String marker;
-    private boolean ai;
 
-    Player(String marker, boolean isComputer) {
+    Human(String marker) {
         this.marker = marker;
-        this.ai = isComputer;
     }
 
     public String getMarker() {
@@ -14,6 +13,6 @@ public class Player {
     }
 
     public boolean isComputer() {
-        return this.ai;
+        return false;
     }
 }
