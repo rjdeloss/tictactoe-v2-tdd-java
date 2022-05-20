@@ -68,7 +68,7 @@ public class Game {
     }
 
     private boolean gameHasFinished() {
-        if (isThereAWinner() && !isThereATie()) {
+        if (isThereAWinner()) {
             gameWinner = String.format("Player %s has won", currentPlayer.getMarker());
         } else {
             gameWinner ="";
