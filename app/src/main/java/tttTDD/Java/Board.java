@@ -50,6 +50,11 @@ public class Board {
         return false;
     }
 
+    public boolean hasNoMoreMoves() {
+        String[] availableMoves = getAvailableMoves(board);
+        return availableMoves.length == 0;
+    }
+
     private String[] initializeBoard(int boardSize) {
         numberOfSpaces = boardSize * boardSize;
 
