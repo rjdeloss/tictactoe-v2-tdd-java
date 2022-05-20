@@ -175,4 +175,35 @@ public class BoardTest {
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
+
+    @Test
+    public void checkIfTheBoardHasNoMoreMoves() {
+        board = new Board();
+
+        board.updateBoard(0, "X");
+        board.updateBoard(1, "O");
+        board.updateBoard(2, "X");
+        board.updateBoard(3, "O");
+        board.updateBoard(4, "O");
+        board.updateBoard(5, "X");
+        board.updateBoard(6, "O");
+        board.updateBoard(7, "X");
+        board.updateBoard(8, "X");
+
+        Assert.assertTrue(board.hasNoMoreMoves());
+    }
+
+    @Test
+    public void checkIfTheBoardHasMoves() {
+        board = new Board();
+
+        board.updateBoard(0, "X");
+        board.updateBoard(1, "O");
+        board.updateBoard(2, "X");
+        board.updateBoard(3, "O");
+        board.updateBoard(4, "O");
+
+
+        Assert.assertFalse(board.hasNoMoreMoves());
+    }
 }
