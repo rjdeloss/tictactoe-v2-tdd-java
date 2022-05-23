@@ -68,11 +68,7 @@ public class Game {
     }
 
     private boolean gameHasFinished() {
-        if (isThereAWinner()) {
-            gameWinner = String.format("Player %s has won", currentPlayer.getMarker());
-        } else {
-            gameWinner ="";
-        }
+        gameWinner = isThereAWinner() ? String.format("Player %s has won", currentPlayer.getMarker()) : "It's a tie";
 
         return isThereAWinner() || isThereATie();
     }

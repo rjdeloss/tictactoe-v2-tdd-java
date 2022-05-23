@@ -198,6 +198,6 @@ public class GameTest {
         game.performMove(humanInput5);
 
         Assert.assertTrue(game.isTheGameComplete());
-        Assert.assertEquals(game.wonBy(), "");
+        Assert.assertEquals(game.wonBy(), "It's a tie");
     }
 }

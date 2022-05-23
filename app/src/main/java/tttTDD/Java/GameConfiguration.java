@@ -3,6 +3,12 @@ package tttTDD.Java;
 public class GameConfiguration {
     private int boardSize;
     private boolean isComputer;
+    private int DEFAULT_SIZE = 3;
+
+    public GameConfiguration(boolean computerPlayer) {
+        this.boardSize = DEFAULT_SIZE;
+        this.isComputer = computerPlayer;
+    }
 
     public GameConfiguration(int boardSize, boolean computerPlayer) {
         this.boardSize = boardSize;
