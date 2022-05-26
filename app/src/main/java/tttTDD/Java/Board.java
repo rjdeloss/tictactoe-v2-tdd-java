@@ -23,6 +23,10 @@ public class Board {
         return isLocationValid(location) ? null : this.board[location];
     }
 
+    public String getBoard() {
+        return String.join("", this.board);
+    }
+
     public int getFirstAvailableMove() {
         String[] availableMoves = generateAvailableMoves(board);
         return convertToLocation(availableMoves[0]);
