@@ -6,7 +6,7 @@ public class Game {
     private Player currentPlayer;
     private boolean gameCompleted;
     private String gameWinner;
-    private Board board;
+    private final Board board;
     private Player player1;
     private Player player2;
 
@@ -46,6 +46,10 @@ public class Game {
         return player2.isComputer();
     }
 
+    public String getBoard() {
+        return board.getBoard();
+    }
+
     public String getBoardSpace(int location) {
         return  board.getSpace(location);
     }
@@ -54,7 +58,11 @@ public class Game {
         return board.getFirstAvailableMove();
     }
 
-    public boolean performMove(int playerInput) {
+    public int getFirstAvailableMove() {
+        return board.getFirstAvailableMove();
+    }
+
+    public boolean performTurn(int playerInput) {
         int input = !currentPlayer.isComputer() ? playerInput : board.getFirstAvailableMove();
 
         if (board.updateBoard(input, currentPlayer.getMarker())) {
@@ -89,4 +97,5 @@ public class Game {
     private void swap() {
         currentPlayer = currentPlayer.getMarker().equals(player1.getMarker()) ? player2 : player1;
     }
+
 }
