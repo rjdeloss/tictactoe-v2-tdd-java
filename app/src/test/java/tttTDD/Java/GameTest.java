@@ -77,7 +77,7 @@ public class GameTest {
     public void GameShouldReturnAStringWithAllTheBoardValues() {
         game = new Game(gameConfig);
 
-        Assert.assertEquals(game.getBoard(), "123456789");
+        Assert.assertEquals(game.toString(), "123456789");
     }
 
     @Test

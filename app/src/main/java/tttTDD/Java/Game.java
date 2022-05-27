@@ -46,8 +46,9 @@ public class Game {
         return player2.isComputer();
     }
 
-    public String getBoard() {
-        return board.getBoard();
+    @Override
+    public String toString() {
+        return board.toString();
     }
 
     public String getBoardSpace(int location) {
@@ -97,5 +98,4 @@ public class Game {
     private void swap() {
         currentPlayer = currentPlayer.getMarker().equals(player1.getMarker()) ? player2 : player1;
     }
-
 }

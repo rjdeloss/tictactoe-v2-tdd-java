@@ -42,7 +42,7 @@ public class ConsoleClientTest {
         String input = "y";
         setInput(input);
         console = new ConsoleClient();
-        board = console.getGame().getBoard();
+        board = console.getGame().toString();
         System.out.println(board.length());
 
         Assert.assertEquals(board.length(), 9);
@@ -78,6 +78,7 @@ public class ConsoleClientTest {
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("X|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"));
+        Assert.assertTrue(terminal.toString().contains("Player X has made a move on space 1"));
     }
 
     @Test

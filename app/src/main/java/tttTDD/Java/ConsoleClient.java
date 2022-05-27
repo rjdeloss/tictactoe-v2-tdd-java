@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ConsoleClient {
     private GameConfiguration gameConfig;
     private Game game;
-    private Scanner input;
+    private final Scanner input;
 
     public ConsoleClient() {
         input = new Scanner(System.in);
@@ -64,7 +64,7 @@ public class ConsoleClient {
 
     private void printTheMovePerformed(int value) {
         String marker = game.getCurrentPlayer().getMarker().equals(game.getPlayer1Marker()) ? game.getPlayer2Marker() : game.getPlayer1Marker();
-        String message = String.format("Player %s has made a move on space %s", marker, value);
+        String message = String.format("Player %s has made a move on space %s", marker, convertLocationToInput(value));
         System.out.println(message);
     }
 
@@ -90,8 +90,12 @@ public class ConsoleClient {
         return value - 1;
     }
 
+    private int convertLocationToInput(int value) {
+        return value + 1;
+    }
+
     private void renderBoard() {
-        String board = game.getBoard();
+        String board = game.toString();
         String[] splitStringIntoRows = board.split("(?<=\\G.{" + gameConfig.getBoardSizeConfiguration() + "})");
         String[] formattedRowsWithColumn = drawLinesForColumns(splitStringIntoRows);
         board = String.join(drawLineForRows(), formattedRowsWithColumn);
@@ -113,15 +117,10 @@ public class ConsoleClient {
     }
 
     private String drawLineForRows() {
-        StringBuilder separators = new StringBuilder();
         String[] splitSeparators;
         String joinSeparators;
 
-        for(int i = 0; i < gameConfig.getBoardSizeConfiguration(); i++) {
-            separators.append("-");
-        }
-
-        splitSeparators = separators.toString().split("");
+        splitSeparators = "-".repeat(Math.max(0, gameConfig.getBoardSizeConfiguration())).split("");
         joinSeparators = String.join("+", splitSeparators);
 
         return "\n"+ joinSeparators + "\n";

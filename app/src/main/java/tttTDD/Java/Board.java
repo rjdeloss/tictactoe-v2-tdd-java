@@ -22,8 +22,8 @@ public class Board {
     public String getSpace(int location) {
         return isLocationValid(location) ? null : this.board[location];
     }
-
-    public String getBoard() {
+    @Override
+    public String toString() {
         return String.join("", this.board);
     }
 
