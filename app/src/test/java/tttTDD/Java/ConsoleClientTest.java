@@ -52,29 +52,61 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleRendersDefaultBoardAfterSelectingGameType() {
-        String input = "n";
+        String input = "y 1 3 2 5 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
 
-        Assert.assertTrue(terminal.toString().contains("123\n---\n456\n---\n789"));
+        Assert.assertTrue(terminal.toString().contains("1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"));
     }
 
+    @Test
+    public void consoleLoopShouldPromptCurrentPlayerToPerformAMove() {
+        String input = "n 1 1 3 2 5 4 7";
+        setInput(input);
+        console = new ConsoleClient();
+        console.startGame();
 
+        Assert.assertTrue(terminal.toString().contains("Make your move:"));
+    }
 
-    // 2nd test to check for real input. Force scanner on here
+    @Test
+    public void boardShouldUpdateWithPlayerInput() {
+        String input = "y 1 3 2 5 4 7";
+        setInput(input);
+        console = new ConsoleClient();
+        console.startGame();
 
-    // 3rd test to check for correct setup of the game
+        Assert.assertTrue(terminal.toString().contains("X|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"));
+    }
 
-    //4th check for render board
+    @Test
+    public void consoleLoopShouldPromptCurrentPlayerToPerformAMoveAgainIfCellIsTaken() {
+        String input = "n 1 1 3 2 5 4 7";
+        setInput(input);
+        console = new ConsoleClient();
+        console.startGame();
 
-//    @Test
-//    public void consoleShouldReceiveInputToCreateGameConfiguration() {
-//        String input = "3 true";
-//        setInput( input );
-//        console = new ConsoleRunner(gameConfig);
-//
-//        console.createGameConfiguration();
-//        //should print out an empty board
-//    }
+        Assert.assertTrue(terminal.toString().contains("Oops... incorrect move. Please try again"));
+    }
+
+    @Test
+    public void consoleShouldRenderAMessageWithTheWinnerOfTheGame() {
+        String input = "n 1 3 2 5 4 7";
+        setInput(input);
+        console = new ConsoleClient();
+        console.startGame();
+
+        Assert.assertTrue(terminal.toString().contains("Player X has won"));
+    }
+
+    @Test
+    public void consoleShouldRenderAMessageWhenGameEndsInATie() {
+        String input = "y 5 1 2 3 7 4 6 8 9";
+        setInput(input);
+        console = new ConsoleClient();
+        console.startGame();
+
+        Assert.assertTrue(terminal.toString().contains("It's a tie"));
+    }
 }
