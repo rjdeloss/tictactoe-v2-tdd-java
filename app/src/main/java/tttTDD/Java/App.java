@@ -6,5 +6,7 @@ package tttTDD.Java;
 public class App {
 
     public static void main(String[] args) {
+        ConsoleClient console = new ConsoleClient();
+        console.startGame();
     }
 }
