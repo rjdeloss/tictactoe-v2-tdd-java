@@ -40,6 +40,16 @@ public class ConsoleClientTest {
     }
 
     @Test
+    public void consoleSetsUpGameWithDefaultBoardSizeAnd2HumanPlayers() {
+        String input = "y 3";
+        setInput(input);
+        console = new ConsoleClient();
+
+        Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
+        Assert.assertFalse(console.getGame().checkPlayer2AIStatus());
+    }
+
+    @Test
     public void consoleRunnerAskForBoardSizeInput() {
         String input = "y 4 1 5 2 6 3 7 4";
         setInput(input);
@@ -48,17 +58,6 @@ public class ConsoleClientTest {
 
         Assert.assertTrue(terminal.toString().contains("Please enter a board size number:"));
         assertThat(terminal.toString(), containsString("1 2 3 4 \n5 6 7 8 \n9 10 11 12 \n13 14 15 16 "));
-    }
-
-
-    @Test
-    public void consoleSetsUpGameWithDefaultBoardSizeAnd2HumanPlayers() {
-        String input = "y 3";
-        setInput(input);
-        console = new ConsoleClient();
-
-        Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
-        Assert.assertFalse(console.getGame().checkPlayer2AIStatus());
     }
 
     @Test
@@ -73,7 +72,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMove() {
-        String input = "n 3 1 1 3 2 5 4 7";
+        String input = "n 3 1 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -88,13 +87,13 @@ public class ConsoleClientTest {
         console = new ConsoleClient();
         console.startGame();
 
-        Assert.assertTrue(terminal.toString().contains("X|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"));
+        Assert.assertTrue(terminal.toString().contains("X 2 3 \n4 5 6 \n7 8 9 "));
         Assert.assertTrue(terminal.toString().contains("Player X has made a move on space 1"));
     }
 
     @Test
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMoveAgainIfCellIsTaken() {
-        String input = "n 3 1 1 3 2 5 4 7";
+        String input = "n 3 1 1 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -104,7 +103,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleShouldRenderAMessageWithTheWinnerOfTheGame() {
-        String input = "n 3 1 3 2 5 4 7";
+        String input = "n 3 1 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
