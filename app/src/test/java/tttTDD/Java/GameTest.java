@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import tttTDD.Java.Interfaces.Player;
 
+
 public class GameTest {
     Game game;
     GameConfiguration gameConfig;
@@ -73,12 +74,12 @@ public class GameTest {
         Assert.assertTrue(game.checkPlayer2AIStatus());
     }
 
-    @Test
-    public void GameShouldReturnAStringWithAllTheBoardValues() {
-        game = new Game(gameConfig);
-
-        Assert.assertEquals(game.toString(), "123456789");
-    }
+//    @Test
+//    public void GameShouldReturnAStringWithAllTheBoardValues() {
+//        game = new Game(gameConfig);
+//
+//        assertThat(game.getBoard(), is(new Board(3)));
+//    }
 
     @Test
     public void ComputerShouldTakeTheFirstAvailableMoveAtLocation0() {

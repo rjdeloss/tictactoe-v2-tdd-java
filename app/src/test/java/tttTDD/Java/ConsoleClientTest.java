@@ -9,6 +9,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class ConsoleClientTest {
     ByteArrayOutputStream terminal = new ByteArrayOutputStream();
     PrintStream outputStream = new PrintStream(terminal);
@@ -27,7 +30,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleRunnerAsksIfItsAHumanVSHuman() {
-        String input = "y";
+        String input = "y 3";
         setInput(input);
         console = new ConsoleClient();
 
@@ -37,32 +40,40 @@ public class ConsoleClientTest {
     }
 
     @Test
-    public void consoleSetsUpGameWithDefaultBoardSizeAnd2HumanPlayers() {
-        String board;
-        String input = "y";
+    public void consoleRunnerAskForBoardSizeInput() {
+        String input = "y 4 1 5 2 6 3 7 4";
         setInput(input);
         console = new ConsoleClient();
-        board = console.getGame().toString();
-        System.out.println(board.length());
+        console.startGame();
 
-        Assert.assertEquals(board.length(), 9);
+        Assert.assertTrue(terminal.toString().contains("Please enter a board size number:"));
+        assertThat(terminal.toString(), containsString("1 2 3 4 \n5 6 7 8 \n9 10 11 12 \n13 14 15 16 "));
+    }
+
+
+    @Test
+    public void consoleSetsUpGameWithDefaultBoardSizeAnd2HumanPlayers() {
+        String input = "y 3";
+        setInput(input);
+        console = new ConsoleClient();
+
         Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
         Assert.assertFalse(console.getGame().checkPlayer2AIStatus());
     }
 
     @Test
     public void consoleRendersDefaultBoardAfterSelectingGameType() {
-        String input = "y 1 3 2 5 4 7";
+        String input = "y 3 1 3 2 5 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
 
-        Assert.assertTrue(terminal.toString().contains("1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"));
+        Assert.assertTrue(terminal.toString().contains("1 2 3 \n4 5 6 \n7 8 9 "));
     }
 
     @Test
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMove() {
-        String input = "n 1 1 3 2 5 4 7";
+        String input = "n 3 1 1 3 2 5 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -72,7 +83,7 @@ public class ConsoleClientTest {
 
     @Test
     public void boardShouldUpdateWithPlayerInput() {
-        String input = "y 1 3 2 5 4 7";
+        String input = "y 3 1 3 2 5 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -83,7 +94,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMoveAgainIfCellIsTaken() {
-        String input = "n 1 1 3 2 5 4 7";
+        String input = "n 3 1 1 3 2 5 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -93,7 +104,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleShouldRenderAMessageWithTheWinnerOfTheGame() {
-        String input = "n 1 3 2 5 4 7";
+        String input = "n 3 1 3 2 5 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -103,7 +114,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleShouldRenderAMessageWhenGameEndsInATie() {
-        String input = "y 5 1 2 3 7 4 6 8 9";
+        String input = "y 3 5 1 2 3 7 4 6 8 9";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();

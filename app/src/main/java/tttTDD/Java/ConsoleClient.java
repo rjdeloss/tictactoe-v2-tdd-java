@@ -15,8 +15,12 @@ public class ConsoleClient {
 
     public void setUpConfiguration() {
         askForHumanVsHumanGame();
-        String answer = input.next();
-        gameConfig = new GameConfiguration(answerToPlayWithComputer(answer));
+        String isComputerPlayingInput = input.next();
+
+        askForBoardSize();
+        int boardSize = input.nextInt();
+
+        gameConfig = new GameConfiguration(boardSize, answerToPlayWithComputer(isComputerPlayingInput));
     }
 
     public void startGame() {
@@ -76,6 +80,10 @@ public class ConsoleClient {
         System.out.println("Is this a Human vs Human Game? [y/n]");
     }
 
+    private void askForBoardSize() {
+        System.out.println("Please enter a board size number:");
+    }
+
     private void askPlayerToMakeMove() {
         String message = "Make your move:";
         System.out.println(message);
@@ -95,34 +103,15 @@ public class ConsoleClient {
     }
 
     private void renderBoard() {
-        String board = game.toString();
-        String[] splitStringIntoRows = board.split("(?<=\\G.{" + gameConfig.getBoardSizeConfiguration() + "})");
-        String[] formattedRowsWithColumn = drawLinesForColumns(splitStringIntoRows);
-        board = String.join(drawLineForRows(), formattedRowsWithColumn);
+        String[] board = game.getBoard();
+        int boardSize = gameConfig.getBoardSizeConfiguration();
 
-        System.out.println(board);
-    }
-
-    private String[] drawLinesForColumns(String[] boardRows) {
-        String[] newRows = new String[boardRows.length];
-
-        for(int i = 0; i < boardRows.length; i++) {
-            String row = boardRows[i];
-
-            String[] splitRowsIntoColumns = row.split("");
-            newRows[i] = String.join("|", splitRowsIntoColumns);
+        for(int i = 0; i < board.length; i++) {
+            String space = board[i];
+            System.out.print(space + " ");
+            if (((i + 1) % boardSize) == 0) {
+                System.out.print("\n");
+            }
         }
-
-        return newRows;
-    }
-
-    private String drawLineForRows() {
-        String[] splitSeparators;
-        String joinSeparators;
-
-        splitSeparators = "-".repeat(Math.max(0, gameConfig.getBoardSizeConfiguration())).split("");
-        joinSeparators = String.join("+", splitSeparators);
-
-        return "\n"+ joinSeparators + "\n";
     }
 }

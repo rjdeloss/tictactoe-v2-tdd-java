@@ -46,9 +46,8 @@ public class Game {
         return player2.isComputer();
     }
 
-    @Override
-    public String toString() {
-        return board.toString();
+    public String[] getBoard() {
+        return board.getBoard();
     }
 
     public String getBoardSpace(int location) {
