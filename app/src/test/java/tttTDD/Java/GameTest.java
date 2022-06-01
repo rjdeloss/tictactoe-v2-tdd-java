@@ -36,7 +36,7 @@ public class GameTest {
     public void PerformTurnShouldReturnFalseWhenASpaceIsTaken() {
         game = new Game(gameConfig);
         int[] humanMoves = {0, 1, 0};
-        // Moves played by computer => 1;
+        // Moves played by computer => 1
 
         performGameTurns(humanMoves);
 
