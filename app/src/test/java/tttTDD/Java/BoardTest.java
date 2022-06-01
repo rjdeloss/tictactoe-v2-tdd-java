@@ -162,6 +162,26 @@ public class BoardTest {
     }
 
     @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf100x100Board() {
+        int boardSize = 100;
+        board = new Board(boardSize);
+
+        updateCellsOnLargeBoard(boardSize, "X");
+
+        Assert.assertTrue(board.hasWinningSet("X"));
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf1000x1000Board() {
+        int boardSize = 1000;
+        board = new Board(boardSize);
+
+        updateCellsOnLargeBoard(boardSize, "X");
+
+        Assert.assertTrue(board.hasWinningSet("X"));
+    }
+
+    @Test
     public void checkIfTheGameHasAWinningSetOnLeftDiagonalOf6x6Board() {
         board = new Board(6);
         int[] moves = {0, 7, 14, 21, 28, 35};
@@ -207,6 +227,12 @@ public class BoardTest {
             int location = locations[i];
 
             board.updateBoard(location, marker);
+        }
+    }
+
+    private void updateCellsOnLargeBoard(int boardSize, String marker){
+        for (int i = 0; i < boardSize; i++) {
+            board.updateBoard(i, marker);
         }
     }
 }
