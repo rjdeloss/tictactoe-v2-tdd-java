@@ -57,7 +57,7 @@ public class ConsoleClientTest {
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("Please enter a board size number:"));
-        assertThat(terminal.toString(), containsString("1 2 3 4 \n5 6 7 8 \n9 10 11 12 \n13 14 15 16 "));
+        assertThat(terminal.toString(), containsString(" 1 | 2 | 3 | 4\n---+---+---+---\n 5 | 6 | 7 | 8\n---+---+---+---\n 9 |10 |11 |12\n---+---+---+---\n13 |14 |15 |16"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ConsoleClientTest {
         console = new ConsoleClient();
         console.startGame();
 
-        Assert.assertTrue(terminal.toString().contains("1 2 3 \n4 5 6 \n7 8 9 "));
+        Assert.assertTrue(terminal.toString().contains("1 |2 |3\n--+--+--\n4 |5 |6\n--+--+--\n7 |8 |9"));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ConsoleClientTest {
         console = new ConsoleClient();
         console.startGame();
 
-        Assert.assertTrue(terminal.toString().contains("X 2 3 \n4 5 6 \n7 8 9 "));
+        Assert.assertTrue(terminal.toString().contains("1 |2 |3\n--+--+--\n4 |5 |6\n--+--+--\n7 |8 |9"));
         Assert.assertTrue(terminal.toString().contains("Player X has made a move on space 1"));
     }
 
