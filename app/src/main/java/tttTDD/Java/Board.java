@@ -12,7 +12,6 @@ public class Board {
     public Board() {
         this.board = initializeBoard(DEFAULT_SIZE);
         this.winningSets = createWinningSet(DEFAULT_SIZE);
-
     }
 
     public Board(int boardSize) {
@@ -24,8 +23,17 @@ public class Board {
         return isLocationValid(location) ? null : this.board[location];
     }
 
+    @Override
+    public String toString() {
+        return String.join("", this.board);
+    }
+
+    public String[] getBoard() {
+        return this.board;
+    }
+
     public int getFirstAvailableMove() {
-        String[] availableMoves = getAvailableMoves(board);
+        String[] availableMoves = generateAvailableMoves(board);
         return convertToLocation(availableMoves[0]);
     }
 
@@ -51,7 +59,7 @@ public class Board {
     }
 
     public boolean hasNoMoreMoves() {
-        String[] availableMoves = getAvailableMoves(board);
+        String[] availableMoves = generateAvailableMoves(board);
         return availableMoves.length == 0;
     }
 
@@ -78,7 +86,7 @@ public class Board {
         return (location < 0) || (location > numberOfSpaces - 1);
     }
 
-    private String[] getAvailableMoves(String[] board) {
+    private String[] generateAvailableMoves(String[] board) {
         ArrayList<String> availableMovesArray = new ArrayList<>();
 
         for (int i = 0; i < board.length; i++) {

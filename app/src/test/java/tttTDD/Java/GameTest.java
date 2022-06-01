@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import tttTDD.Java.Interfaces.Player;
 
+
 public class GameTest {
     Game game;
     GameConfiguration gameConfig;
@@ -25,11 +26,23 @@ public class GameTest {
         game = new Game(gameConfig);
 
         // Act
-        game.performMove(playerInput);
+        game.performTurn(playerInput);
 
         // Assert
-        Assert.assertNotEquals(game.performMove(playerInput), false);
-//        Assert.assertEquals(game.board.getSpace(playerInput), game.getPlayerMarker(player1));
+        Assert.assertNotEquals(game.performTurn(playerInput), false);
+    }
+
+    @Test
+    public void PerformTurnShouldReturnFalseWhenASpaceIsTaken() {
+        game = new Game(gameConfig);
+        int humanInput1 = 0;
+        int computerInput1 = 1;
+        int humanInput2 = 0;
+
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+
+        Assert.assertFalse(game.performTurn(humanInput2));
     }
 
     @Test
@@ -39,11 +52,19 @@ public class GameTest {
 
         // Act
         Player playerMakingMove = game.getCurrentPlayer();
-        game.performMove(playerInput);
+        game.performTurn(playerInput);
         Player nextPlayer = game.getCurrentPlayer();
 
         // Assert
         Assert.assertNotEquals(playerMakingMove.getMarker(), nextPlayer.getMarker());
+    }
+
+    @Test
+    public void GameShouldGenerateHumanPlayerAsFirstPlayerIfConfigFlagIsTrue(){
+        game = new Game(gameConfig);
+
+        Assert.assertEquals(game.getPlayer1Marker(), "X");
+        Assert.assertFalse(game.checkPlayer1AIStatus());
     }
 
     @Test
@@ -53,13 +74,20 @@ public class GameTest {
         Assert.assertTrue(game.checkPlayer2AIStatus());
     }
 
+//    @Test
+//    public void GameShouldReturnAStringWithAllTheBoardValues() {
+//        game = new Game(gameConfig);
+//
+//        assertThat(game.getBoard(), is(new Board(3)));
+//    }
+
     @Test
     public void ComputerShouldTakeTheFirstAvailableMoveAtLocation0() {
         int playerInput = 3;
         game = new Game(gameConfig);
 
-        game.performMove(playerInput);
-        game.performMove(2);
+        game.performTurn(playerInput);
+        game.performTurn(2);
 
         Assert.assertEquals(game.getBoardSpace(0), game.getPlayer2Marker());
     }
@@ -71,12 +99,12 @@ public class GameTest {
         int playerInput3 = 6;
         game = new Game(gameConfig);
 
-        game.performMove(playerInput1);
-        game.performMove(2);
-        game.performMove(playerInput2);
-        game.performMove(7);
-        game.performMove(playerInput3);
-        game.performMove(9);
+        game.performTurn(playerInput1);
+        game.performTurn(2);
+        game.performTurn(playerInput2);
+        game.performTurn(7);
+        game.performTurn(playerInput3);
+        game.performTurn(9);
 
         Assert.assertEquals(game.getBoardSpace(4), game.getPlayer2Marker());
     }
@@ -86,7 +114,7 @@ public class GameTest {
         int playerInput = 0;
         game = new Game(gameConfig);
 
-        game.performMove(playerInput);
+        game.performTurn(playerInput);
 
         Assert.assertEquals(game.getBoardFirstAvailableMove(), 1);
     }
@@ -101,11 +129,11 @@ public class GameTest {
         int computerInput2 = 2;
         int humanInput3 = 6;
 
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+        game.performTurn(humanInput2);
+        game.performTurn(computerInput2);
+        game.performTurn(humanInput3);
 
         Assert.assertTrue(game.isTheGameComplete());
     }
@@ -119,10 +147,10 @@ public class GameTest {
         int humanInput2 = 3;
         int computerInput2 = 2;
 
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+        game.performTurn(humanInput2);
+        game.performTurn(computerInput2);
 
         Assert.assertFalse(game.isTheGameComplete());
     }
@@ -137,11 +165,11 @@ public class GameTest {
         int computerInput2 = 2;
         int humanInput3 = 6;
 
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+        game.performTurn(humanInput2);
+        game.performTurn(computerInput2);
+        game.performTurn(humanInput3);
 
         Assert.assertTrue(game.isTheGameComplete());
         Assert.assertEquals(game.wonBy(), "Player X has won");
@@ -160,14 +188,14 @@ public class GameTest {
         int humanInput4 = 8;
         int computerInput4 = 7;
 
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
-        game.performMove(computerInput3);
-        game.performMove(humanInput4);
-        game.performMove(computerInput4);
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+        game.performTurn(humanInput2);
+        game.performTurn(computerInput2);
+        game.performTurn(humanInput3);
+        game.performTurn(computerInput3);
+        game.performTurn(humanInput4);
+        game.performTurn(computerInput4);
 
         Assert.assertTrue(game.isTheGameComplete());
         Assert.assertEquals(game.wonBy(), "Player O has won");
@@ -187,17 +215,29 @@ public class GameTest {
         int computerInput4 = 7;
         int humanInput5 = 8;
 
-        game.performMove(humanInput1);
-        game.performMove(computerInput1);
-        game.performMove(humanInput2);
-        game.performMove(computerInput2);
-        game.performMove(humanInput3);
-        game.performMove(computerInput3);
-        game.performMove(humanInput4);
-        game.performMove(computerInput4);
-        game.performMove(humanInput5);
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+        game.performTurn(humanInput2);
+        game.performTurn(computerInput2);
+        game.performTurn(humanInput3);
+        game.performTurn(computerInput3);
+        game.performTurn(humanInput4);
+        game.performTurn(computerInput4);
+        game.performTurn(humanInput5);
 
         Assert.assertTrue(game.isTheGameComplete());
-        Assert.assertEquals(game.wonBy(), "");
+        Assert.assertEquals(game.wonBy(), "It's a tie");
+    }
+
+    @Test
+    public void getFirstAvailableMoveReturnsTheFirstAvailableMoveFromTheBoard() {
+        game = new Game(gameConfig);
+        int humanInput1 = 4;
+        int computerInput1 = 0;
+
+        game.performTurn(humanInput1);
+        game.performTurn(computerInput1);
+
+        Assert.assertEquals(game.getFirstAvailableMove(), 1);
     }
 }
