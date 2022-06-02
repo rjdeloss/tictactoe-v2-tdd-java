@@ -1,6 +1,8 @@
 package tttTDD.Java;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class ConsoleClient {
     private GameConfiguration gameConfig;
@@ -103,15 +105,52 @@ public class ConsoleClient {
     }
 
     private void renderBoard() {
-        String[] board = game.getBoard();
         int boardSize = gameConfig.getBoardSizeConfiguration();
+        String[] board = game.getBoard();
+        String largestInputOnBoard = String.valueOf(boardSize * boardSize);
+        String separators = drawRowHorizontalLines(boardSize, largestInputOnBoard);
 
-        for(int i = 0; i < board.length; i++) {
-            String space = board[i];
-            System.out.print(space + " ");
-            if (((i + 1) % boardSize) == 0) {
-                System.out.print("\n");
+        ArrayList<String> fullBoard = new ArrayList<>();
+        ArrayList<String> formattedRow = new ArrayList<>();
+
+        for(int location = 0; location < board.length; location++) {
+            String cell = formatCellDisplay(board[location], largestInputOnBoard);
+            formattedRow.add(cell);
+
+            int reachedEndOfTheRow = (location + 1) % boardSize;
+
+            if (reachedEndOfTheRow == 0) {
+                String linesBetweenCells = String.join(" |", formattedRow);
+                fullBoard.add(linesBetweenCells + "\n");
+                formattedRow.clear();
             }
         }
+
+        String assembleBoard = String.join(separators +"\n",fullBoard);
+
+        System.out.println(assembleBoard);
+    }
+
+    private String drawRowHorizontalLines(int boardSize, String maxInput) {
+        ArrayList<String> separatorCollection = new ArrayList<>();
+
+        String separator = maxInput.replaceAll(".", "-") + "-";
+        IntStream.range(0, boardSize).forEach(i -> separatorCollection.add(separator));
+
+        return String.join("+", separatorCollection);
+    }
+
+    private String formatCellDisplay(String cell, String maxInput) {
+        StringBuilder formattedCell = new StringBuilder();
+
+        if (cell.length() <= maxInput.length()) {
+            StringBuilder spaceAlignment = new StringBuilder();
+
+            IntStream.range(0, maxInput.length() - cell.length()).forEach(i -> spaceAlignment.append(" "));
+            formattedCell.append(spaceAlignment);
+            formattedCell.append(cell);
+        }
+
+        return formattedCell.toString();
     }
 }

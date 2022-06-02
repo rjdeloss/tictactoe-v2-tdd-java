@@ -64,9 +64,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnTopRowOf3x3Board() {
         board = new Board();
-        board.updateBoard(0, "X");
-        board.updateBoard(1, "X");
-        board.updateBoard(2, "X");
+        int[] moves = {0, 1, 2};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -74,9 +74,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnMiddleRowOf3x3Board() {
         board = new Board();
-        board.updateBoard(3, "X");
-        board.updateBoard(4, "X");
-        board.updateBoard(5, "X");
+        int[] moves = {3, 4, 5};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -84,9 +84,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnBottomRowOf3x3Board() {
         board = new Board();
-        board.updateBoard(6, "X");
-        board.updateBoard(7, "X");
-        board.updateBoard(8, "X");
+        int[] moves = {6, 7, 8};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -94,9 +94,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnLeftColumnOf3x3Board() {
         board = new Board();
-        board.updateBoard(0, "X");
-        board.updateBoard(3, "X");
-        board.updateBoard(6, "X");
+        int[] moves = {0, 3, 6};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -104,9 +104,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnMiddleColumnOf3x3Board() {
         board = new Board();
-        board.updateBoard(0, "X");
-        board.updateBoard(3, "X");
-        board.updateBoard(6, "X");
+        int[] moves = {1, 4, 7};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -114,9 +114,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnRightColumnOf3x3Board() {
         board = new Board();
-        board.updateBoard(2, "X");
-        board.updateBoard(5, "X");
-        board.updateBoard(8, "X");
+        int[] moves = {2, 5, 8};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -124,9 +124,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnLeftDiagonalOf3x3Board() {
         board = new Board();
-        board.updateBoard(0, "X");
-        board.updateBoard(4, "X");
-        board.updateBoard(8, "X");
+        int[] moves = {0, 4, 8};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -134,9 +134,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnRightDiagonalOf3x3Board() {
         board = new Board();
-        board.updateBoard(2, "X");
-        board.updateBoard(4, "X");
-        board.updateBoard(6, "X");
+        int[] moves = {2, 4, 6};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -144,11 +144,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnTopRowOf5x5Board() {
         board = new Board(5);
-        board.updateBoard(0, "X");
-        board.updateBoard(1, "X");
-        board.updateBoard(2, "X");
-        board.updateBoard(3, "X");
-        board.updateBoard(4, "X");
+        int[] moves = {0, 1, 2, 3, 4};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -156,9 +154,29 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnTopRowOf2x2Board() {
         board = new Board(2);
+        int[] moves = {0, 1};
 
-        board.updateBoard(0, "X");
-        board.updateBoard(1, "X");
+        updateCellsOnBoard(moves, "X");
+
+        Assert.assertTrue(board.hasWinningSet("X"));
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf100x100Board() {
+        int boardSize = 100;
+        board = new Board(boardSize);
+
+        updateCellsOnLargeBoard(boardSize, "X");
+
+        Assert.assertTrue(board.hasWinningSet("X"));
+    }
+
+    @Test
+    public void checkIfTheGameHasAWinningSetOnTopRowOf1000x1000Board() {
+        int boardSize = 1000;
+        board = new Board(boardSize);
+
+        updateCellsOnLargeBoard(boardSize, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -166,12 +184,9 @@ public class BoardTest {
     @Test
     public void checkIfTheGameHasAWinningSetOnLeftDiagonalOf6x6Board() {
         board = new Board(6);
-        board.updateBoard(0, "X");
-        board.updateBoard(7, "X");
-        board.updateBoard(14, "X");
-        board.updateBoard(21, "X");
-        board.updateBoard(28, "X");
-        board.updateBoard(35, "X");
+        int[] moves = {0, 7, 14, 21, 28, 35};
+
+        updateCellsOnBoard(moves, "X");
 
         Assert.assertTrue(board.hasWinningSet("X"));
     }
@@ -179,16 +194,10 @@ public class BoardTest {
     @Test
     public void checkIfTheBoardHasNoMoreMoves() {
         board = new Board();
+        int[] moves = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        String[] markers = {"X", "O", "X", "O", "O", "X", "O", "X", "X"};
 
-        board.updateBoard(0, "X");
-        board.updateBoard(1, "O");
-        board.updateBoard(2, "X");
-        board.updateBoard(3, "O");
-        board.updateBoard(4, "O");
-        board.updateBoard(5, "X");
-        board.updateBoard(6, "O");
-        board.updateBoard(7, "X");
-        board.updateBoard(8, "X");
+        updateCellsOnBoard(moves, markers);
 
         Assert.assertTrue(board.hasNoMoreMoves());
     }
@@ -196,14 +205,34 @@ public class BoardTest {
     @Test
     public void checkIfTheBoardHasMoves() {
         board = new Board();
+        int[] moves = {0, 1, 2, 3, 4};
+        String[] markers = {"X", "O", "X", "O", "O"};
 
-        board.updateBoard(0, "X");
-        board.updateBoard(1, "O");
-        board.updateBoard(2, "X");
-        board.updateBoard(3, "O");
-        board.updateBoard(4, "O");
-
+        updateCellsOnBoard(moves, markers);
 
         Assert.assertFalse(board.hasNoMoreMoves());
+    }
+
+    private void updateCellsOnBoard(int[] locations, String[] markers) {
+        for(int i = 0; i < locations.length; i++) {
+            int location = locations[i];
+            String marker = markers[i];
+
+            board.updateBoard(location, marker);
+        }
+    }
+
+    private void updateCellsOnBoard(int[] locations, String marker) {
+        for(int i = 0; i < locations.length; i++) {
+            int location = locations[i];
+
+            board.updateBoard(location, marker);
+        }
+    }
+
+    private void updateCellsOnLargeBoard(int boardSize, String marker){
+        for (int i = 0; i < boardSize; i++) {
+            board.updateBoard(i, marker);
+        }
     }
 }

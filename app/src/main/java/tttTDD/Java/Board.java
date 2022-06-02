@@ -23,11 +23,6 @@ public class Board {
         return isLocationValid(location) ? null : this.board[location];
     }
 
-    @Override
-    public String toString() {
-        return String.join("", this.board);
-    }
-
     public String[] getBoard() {
         return this.board;
     }
