@@ -109,7 +109,6 @@ public class ConsoleClient {
         String[] board = game.getBoard();
         String largestInputOnBoard = String.valueOf(boardSize * boardSize);
         String separators = drawRowHorizontalLines(boardSize, largestInputOnBoard);
-        String addLinesBetweenCells;
 
         ArrayList<String> fullBoard = new ArrayList<>();
         ArrayList<String> formattedRow = new ArrayList<>();
@@ -121,8 +120,8 @@ public class ConsoleClient {
             int reachedEndOfTheRow = (location + 1) % boardSize;
 
             if (reachedEndOfTheRow == 0) {
-                addLinesBetweenCells = String.join(" |", formattedRow);
-                fullBoard.add(addLinesBetweenCells + "\n");
+                String linesBetweenCells = String.join(" |", formattedRow);
+                fullBoard.add(linesBetweenCells + "\n");
                 formattedRow.clear();
             }
         }
