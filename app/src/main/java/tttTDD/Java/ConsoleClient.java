@@ -2,6 +2,7 @@ package tttTDD.Java;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class ConsoleClient {
     private GameConfiguration gameConfig;
@@ -104,54 +105,53 @@ public class ConsoleClient {
     }
 
     private void renderBoard() {
-        String[] board = game.getBoard();
         int boardSize = gameConfig.getBoardSizeConfiguration();
-        String maxInput = String.valueOf(boardSize * boardSize);
+        String[] board = game.getBoard();
+        String largestInputOnBoard = String.valueOf(boardSize * boardSize);
+        String separators = drawRowHorizontalLines(boardSize, largestInputOnBoard);
+        String addLinesBetweenCells;
 
-        String rowWithLines;
         ArrayList<String> fullBoard = new ArrayList<>();
         ArrayList<String> formattedRow = new ArrayList<>();
-        String separators = drawRowHorizontalLines(boardSize, maxInput);
 
-        for(int i = 0; i < board.length; i++) {
-            String space = cellDisplayFormatting(board[i], maxInput);
-            formattedRow.add(space);
+        for(int location = 0; location < board.length; location++) {
+            String cell = formatCellDisplay(board[location], largestInputOnBoard);
+            formattedRow.add(cell);
 
-            if (((i + 1) % boardSize) == 0) {
-                rowWithLines = String.join(" |", formattedRow);
-                fullBoard.add(rowWithLines + "\n");
+            int reachedEndOfTheRow = (location + 1) % boardSize;
+
+            if (reachedEndOfTheRow == 0) {
+                addLinesBetweenCells = String.join(" |", formattedRow);
+                fullBoard.add(addLinesBetweenCells + "\n");
                 formattedRow.clear();
             }
         }
 
-        System.out.println(String.join(separators +"\n",fullBoard));
+        String assembleBoard = String.join(separators +"\n",fullBoard);
+
+        System.out.println(assembleBoard);
     }
 
     private String drawRowHorizontalLines(int boardSize, String maxInput) {
         ArrayList<String> separatorCollection = new ArrayList<>();
-        String separator = "";
 
-        for (int i = 0; i <= maxInput.length(); i++) {
-            separator += "-";
-        }
-
-        for (int j = 0; j < boardSize; j++) {
-            separatorCollection.add(separator);
-        }
+        String separator = maxInput.replaceAll(".", "-") + "-";
+        IntStream.range(0, boardSize).forEach(i -> separatorCollection.add(separator));
 
         return String.join("+", separatorCollection);
     }
 
-    private String cellDisplayFormatting(String cell, String maxInput) {
-        String formattedCell = "";
-        if (cell.length() <= maxInput.length()) {
-            for (int i = 0; i < (maxInput.length() - cell.length()); i++) {
-                formattedCell += " ";
-            }
+    private String formatCellDisplay(String cell, String maxInput) {
+        StringBuilder formattedCell = new StringBuilder();
 
-            formattedCell += cell;
+        if (cell.length() <= maxInput.length()) {
+            StringBuilder spaceAlignment = new StringBuilder();
+
+            IntStream.range(0, maxInput.length() - cell.length()).forEach(i -> spaceAlignment.append(" "));
+            formattedCell.append(spaceAlignment);
+            formattedCell.append(cell);
         }
 
-        return formattedCell;
+        return formattedCell.toString();
     }
 }
