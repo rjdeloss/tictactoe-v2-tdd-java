@@ -106,7 +106,6 @@ public class ConsoleClient {
 
     private void renderBoard() {
         int boardSize = gameConfig.getBoardSizeConfiguration();
-<<<<<<< Updated upstream
         String[] board = game.getBoard();
         String largestInputOnBoard = String.valueOf(boardSize * boardSize);
         String separators = drawRowHorizontalLines(boardSize, largestInputOnBoard);
@@ -124,55 +123,9 @@ public class ConsoleClient {
                 String linesBetweenCells = String.join(" |", formattedRow);
                 fullBoard.add(linesBetweenCells + "\n");
                 formattedRow.clear();
-=======
-        String maxInput = String.valueOf(boardSize * boardSize);
-
-        String rowWithLines;
-        ArrayList<String> fullBoard = new ArrayList<>();
-        ArrayList<String> formattedRow = new ArrayList<>();
-        String separators = drawRowHorizontalLines(boardSize, maxInput);
-
-        for(int i = 0; i < board.length; i++) {
-            String space = cellDisplayFormatting(board[i], maxInput);
-            formattedRow.add(space);
-
-            if (((i + 1) % boardSize) == 0) {
-                rowWithLines = String.join(" |", formattedRow);
-                fullBoard.add(rowWithLines + "\n");
-                formattedRow.clear();
             }
         }
 
-        System.out.println(String.join(separators +"\n",fullBoard));
-    }
-
-    private String drawRowHorizontalLines(int boardSize, String maxInput) {
-        ArrayList<String> separatorCollection = new ArrayList<>();
-        String separator = "";
-
-        for (int i = 0; i <= maxInput.length(); i++) {
-            separator += "-";
-        }
-
-        for (int j = 0; j < boardSize; j++) {
-            separatorCollection.add(separator);
-        }
-
-        return String.join("+", separatorCollection);
-    }
-
-    private String cellDisplayFormatting(String cell, String maxInput) {
-        String formattedCell = "";
-        if (cell.length() <= maxInput.length()) {
-            for (int i = 0; i < (maxInput.length() - cell.length()); i++) {
-                formattedCell += " ";
->>>>>>> Stashed changes
-            }
-
-            formattedCell += cell;
-        }
-
-<<<<<<< Updated upstream
         String assembleBoard = String.join(separators +"\n",fullBoard);
 
         System.out.println(assembleBoard);
@@ -212,8 +165,5 @@ public class ConsoleClient {
         }
 
         return value;
-=======
-        return formattedCell;
->>>>>>> Stashed changes
     }
 }
