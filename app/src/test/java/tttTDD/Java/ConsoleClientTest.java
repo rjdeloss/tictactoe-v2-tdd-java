@@ -77,7 +77,11 @@ public class ConsoleClientTest {
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("Please enter a board size number:"));
+<<<<<<< Updated upstream
         assertThat(terminal.toString(), containsString(" 1 | 2 | 3 | 4\n---+---+---+---\n 5 | 6 | 7 | 8\n---+---+---+---\n 9 |10 |11 |12\n---+---+---+---\n13 |14 |15 |16"));
+=======
+//        assertThat(terminal.toString(), containsString("1 2 3 4 \n5 6 7 8 \n9 10 11 12 \n13 14 15 16 "));
+>>>>>>> Stashed changes
     }
 
     @Test
@@ -87,7 +91,11 @@ public class ConsoleClientTest {
         console = new ConsoleClient();
         console.startGame();
 
+<<<<<<< Updated upstream
         Assert.assertTrue(terminal.toString().contains("1 |2 |3\n--+--+--\n4 |5 |6\n--+--+--\n7 |8 |9"));
+=======
+//        Assert.assertTrue(terminal.toString().contains("1 2 3 \n4 5 6 \n7 8 9 "));
+>>>>>>> Stashed changes
     }
 
     @Test
@@ -107,7 +115,11 @@ public class ConsoleClientTest {
         console = new ConsoleClient();
         console.startGame();
 
+<<<<<<< Updated upstream
         Assert.assertTrue(terminal.toString().contains("1 |2 |3\n--+--+--\n4 |5 |6\n--+--+--\n7 |8 |9"));
+=======
+//        Assert.assertTrue(terminal.toString().contains("X 2 3 \n4 5 6 \n7 8 9 "));
+>>>>>>> Stashed changes
         Assert.assertTrue(terminal.toString().contains("Player X has made a move on space 1"));
     }
 
@@ -139,5 +151,21 @@ public class ConsoleClientTest {
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("It's a tie"));
+    }
+
+    @Test
+    public void consoleShouldDisplayColumnsOnA3x3Board() {
+        String input = "y 3 1 3 2 5 4 7";
+        setInput(input);
+        console = new ConsoleClient();
+        console.startGame();
+
+        String expectedBoardRendered =
+                "1 | 2 | 3\n" +
+                "4 | 5 | 6\n" +
+                "7 | 8 | 9";
+
+//        Assert.assertTrue(terminal.toString().contains(expectedBoardRendered)
+        assertThat(terminal.toString(), containsString(expectedBoardRendered));
     }
 }
