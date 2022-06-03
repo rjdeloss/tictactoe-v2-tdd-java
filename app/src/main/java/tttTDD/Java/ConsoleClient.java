@@ -1,6 +1,7 @@
 package tttTDD.Java;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -153,17 +154,34 @@ public class ConsoleClient {
     }
 
     private int playerInput() {
-        int value;
-
         try {
-            value = input.nextInt();
-        }
-        catch (Exception e) {
-            System.out.println("Stop it. Enter a number as an input:");
-            input.nextLine();
-            value = playerInput();
+            int value = input.nextInt();
+
+            if (value > 2) {
+                return value;
+            } else {
+                throw new Exception();
+            }
         }
 
-        return value;
+        catch (InputMismatchException e) {
+            System.out.println(wrongTypeMessage());
+            input.nextLine();
+            return  playerInput();
+        }
+
+        catch (Exception e) {
+            System.out.println(negativeBoardSize());
+            input.nextLine();
+            return  playerInput();
+        }
+    }
+
+    private String wrongTypeMessage() {
+        return "Stop it. Enter a number as an input:";
+    }
+
+    private String negativeBoardSize() {
+        return "Can't have the Universe implode on us. Try a larger number:";
     }
 }
