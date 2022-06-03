@@ -29,7 +29,7 @@ public class ConsoleClientTest {
     }
 
     @Test
-    public void consoleRunnerAsksIfItsAHumanVSHuman() {
+    public void consoleAsksIfItsAHumanVSHuman() {
         String input = "y 3";
         setInput(input);
         console = new ConsoleClient();
@@ -40,6 +40,16 @@ public class ConsoleClientTest {
     }
 
     @Test
+    public void consoleDefaultsToHumanVsComputerWithAnyOtherAnswer() {
+        String input = "n 3";
+        setInput(input);
+        console = new ConsoleClient();
+
+        Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
+        Assert.assertTrue(console.getGame().checkPlayer2AIStatus());
+    }
+
+    @Test
     public void consoleSetsUpGameWithDefaultBoardSizeAnd2HumanPlayers() {
         String input = "y 3";
         setInput(input);
@@ -47,6 +57,16 @@ public class ConsoleClientTest {
 
         Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
         Assert.assertFalse(console.getGame().checkPlayer2AIStatus());
+    }
+
+    @Test
+    public void playerInputShouldPromptAReentryIfTheInputIsNotAValidInput() {
+        String input = "y three \n 3";
+        setInput(input);
+        console = new ConsoleClient();
+
+        Assert.assertTrue(terminal.toString().contains("Stop it. Enter a number as an input:"));
+
     }
 
     @Test

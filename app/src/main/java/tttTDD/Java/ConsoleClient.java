@@ -20,7 +20,7 @@ public class ConsoleClient {
         String isComputerPlayingInput = input.next();
 
         askForBoardSize();
-        int boardSize = input.nextInt();
+        int boardSize = playerInput();
 
         gameConfig = new GameConfiguration(boardSize, answerToPlayWithComputer(isComputerPlayingInput));
     }
@@ -35,7 +35,7 @@ public class ConsoleClient {
             int value;
             if (!game.getCurrentPlayer().isComputer()) {
                 askPlayerToMakeMove();
-                value = convertInputToLocation(input.nextInt());
+                value = convertInputToLocation(playerInput());
             } else {
                 value = game.getFirstAvailableMove();
 
@@ -144,13 +144,26 @@ public class ConsoleClient {
         StringBuilder formattedCell = new StringBuilder();
 
         if (cell.length() <= maxInput.length()) {
-            StringBuilder spaceAlignment = new StringBuilder();
 
-            IntStream.range(0, maxInput.length() - cell.length()).forEach(i -> spaceAlignment.append(" "));
-            formattedCell.append(spaceAlignment);
+            IntStream.range(0, maxInput.length() - cell.length()).forEach(i -> formattedCell.append(" "));
             formattedCell.append(cell);
         }
 
         return formattedCell.toString();
+    }
+
+    private int playerInput() {
+        int value;
+
+        try {
+            value = input.nextInt();
+        }
+        catch (Exception e) {
+            System.out.println("Stop it. Enter a number as an input:");
+            input.nextLine();
+            value = playerInput();
+        }
+
+        return value;
     }
 }
