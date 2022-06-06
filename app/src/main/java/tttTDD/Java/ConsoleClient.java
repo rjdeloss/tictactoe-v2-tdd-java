@@ -1,6 +1,7 @@
 package tttTDD.Java;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -9,7 +10,7 @@ public class ConsoleClient {
     private Game game;
     private final Scanner input;
 
-    public ConsoleClient() {
+    public ConsoleClient() throws Exception{
         input = new Scanner(System.in);
         setUpConfiguration();
         setUpGame();
@@ -20,7 +21,7 @@ public class ConsoleClient {
         String isComputerPlayingInput = input.next();
 
         askForBoardSize();
-        int boardSize = input.nextInt();
+        int boardSize = boardSizeInput();
 
         gameConfig = new GameConfiguration(boardSize, answerToPlayWithComputer(isComputerPlayingInput));
     }
@@ -35,7 +36,7 @@ public class ConsoleClient {
             int value;
             if (!game.getCurrentPlayer().isComputer()) {
                 askPlayerToMakeMove();
-                value = convertInputToLocation(input.nextInt());
+                value = convertInputToLocation(moveInput());
             } else {
                 value = game.getFirstAvailableMove();
 
@@ -51,7 +52,7 @@ public class ConsoleClient {
         return this.game;
     }
 
-    private void setUpGame() {
+    private void setUpGame() throws Exception{
         game = new Game(gameConfig);
     }
 
@@ -144,13 +145,55 @@ public class ConsoleClient {
         StringBuilder formattedCell = new StringBuilder();
 
         if (cell.length() <= maxInput.length()) {
-            StringBuilder spaceAlignment = new StringBuilder();
 
-            IntStream.range(0, maxInput.length() - cell.length()).forEach(i -> spaceAlignment.append(" "));
-            formattedCell.append(spaceAlignment);
+            IntStream.range(0, maxInput.length() - cell.length()).forEach(i -> formattedCell.append(" "));
             formattedCell.append(cell);
         }
 
         return formattedCell.toString();
+    }
+
+    private int boardSizeInput() {
+        try {
+            int value = input.nextInt();
+
+            if (value > 2) {
+                return value;
+            } else {
+                throw new Exception();
+            }
+        }
+
+        catch (InputMismatchException e) {
+            System.out.println(wrongTypeMessage());
+            input.nextLine();
+            return  boardSizeInput();
+        }
+
+        catch (Exception e) {
+            System.out.println(negativeBoardSize());
+            input.nextLine();
+            return  boardSizeInput();
+        }
+    }
+
+    private int moveInput() {
+        try {
+            return input.nextInt();
+        }
+
+        catch (Exception e) {
+            System.out.println(wrongTypeMessage());
+            input.nextLine();
+            return  moveInput();
+        }
+    }
+
+    private String wrongTypeMessage() {
+        return "Stop it. Enter a number as an input:";
+    }
+
+    private String negativeBoardSize() {
+        return "Can't have the Universe implode on us. Try a larger number:";
     }
 }
