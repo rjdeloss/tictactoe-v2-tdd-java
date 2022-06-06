@@ -23,7 +23,7 @@ public class GameTest {
     public void PlayerShouldUpdateBoardWithinTheGame3x3() {
         // Arrange
         int playerInput = 3;
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
 
         // Act
         game.performTurn(playerInput);
@@ -34,7 +34,7 @@ public class GameTest {
 
     @Test
     public void PerformTurnShouldReturnFalseWhenASpaceIsTaken() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] humanMoves = {0, 1, 0};
         // Moves played by computer => 1
 
@@ -46,7 +46,7 @@ public class GameTest {
     @Test
     public void GameShouldSwapPlayersAfterSuccessfulMoveOnTheBoard() {
         int playerInput = 3;
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
 
         // Act
         Player playerMakingMove = game.getCurrentPlayer();
@@ -59,7 +59,7 @@ public class GameTest {
 
     @Test
     public void GameShouldGenerateHumanPlayerAsFirstPlayerIfConfigFlagIsTrue(){
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
 
         Assert.assertEquals(game.getPlayer1Marker(), "X");
         Assert.assertFalse(game.checkPlayer1AIStatus());
@@ -67,14 +67,14 @@ public class GameTest {
 
     @Test
     public void GameShouldGenerateComputerPlayerAsSecondPlayerIfConfigFlagIsTrue(){
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
 
         Assert.assertTrue(game.checkPlayer2AIStatus());
     }
 
     @Test
     public void ComputerShouldTakeTheFirstAvailableMoveAtLocation0() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] playerInputs = {3, 2};
 
         performGameTurns(playerInputs);
@@ -84,7 +84,7 @@ public class GameTest {
 
     @Test
     public void ComputerShouldTakeTheFirstAvailableMoveAtLocation4() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {3, 5, 2, 7, 6, 9};
         // Moves played by computer => 5, 7, 9
 
@@ -95,7 +95,7 @@ public class GameTest {
 
     @Test
     public void GameShouldProvideFirstAvailableMoveForComputerPlayerFromTheBoard() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int playerInput = 0;
 
         game.performTurn(playerInput);
@@ -105,7 +105,7 @@ public class GameTest {
 
     @Test
     public void ChangeGameStateGameCompletedToTrueIfWinningSetFound() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {0, 1, 3, 2, 6};
         // Moves played by computer => 1, 2
 
@@ -116,7 +116,7 @@ public class GameTest {
 
     @Test
     public void ChangeGameStateGameCompletedToFalseIfWinningSetNotFound() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {8, 1, 3, 2};
         // Moves played by computer => 1, 2
 
@@ -127,7 +127,7 @@ public class GameTest {
 
     @Test
     public void GameShouldListIfTheGameHasConcludedAndWinner() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {0, 1, 3, 2, 6};
         // Moves played by computer => 1, 2
 
@@ -139,7 +139,7 @@ public class GameTest {
 
     @Test
     public void GameShouldListIfTheGameHasConcludedAndAComputerWon() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {0, 1, 3, 2, 5, 4, 8, 7};
         // Moves played by computer => 1, 2, 4, 7
 
@@ -151,7 +151,7 @@ public class GameTest {
 
     @Test
     public void GameShouldNotListWinnerIfTheGameConcludedAsATie() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {4, 0, 1, 2, 6, 3, 5, 7, 8};
         // Moves played by computer => 0, 2, 3, 7
 
@@ -163,7 +163,7 @@ public class GameTest {
 
     @Test
     public void getFirstAvailableMoveReturnsTheFirstAvailableMoveFromTheBoard() {
-        game = new Game(gameConfig);
+        game = createGameWithoutException(gameConfig);
         int[] movesPlayed = {4, 0};
         // Moves played by computer => 0
 
@@ -175,6 +175,16 @@ public class GameTest {
     private void performGameTurns(int[] moves) {
         for(int location : moves) {
             game.performTurn(location);
+        }
+    }
+
+    private Game createGameWithoutException(GameConfiguration gameConfig) {
+        try {
+            return new Game(gameConfig);
+        }
+
+        catch (Exception e) {
+            return null;
         }
     }
 }

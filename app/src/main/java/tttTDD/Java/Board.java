@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Board {
+    private static final int MINIMUM_SIZE = 3;
     private final int DEFAULT_SIZE = 3;
     private final String[] board;
     private int numberOfSpaces;
@@ -14,7 +15,11 @@ public class Board {
         this.winningSets = createWinningSet(DEFAULT_SIZE);
     }
 
-    public Board(int boardSize) {
+    public Board(int boardSize) throws Exception {
+        if (boardSize < MINIMUM_SIZE) {
+            throw new Exception("This board is too small");
+        }
+
         this.board = initializeBoard(boardSize);
         this.winningSets = createWinningSet(boardSize);
     }

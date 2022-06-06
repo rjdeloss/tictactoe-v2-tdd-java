@@ -10,7 +10,7 @@ public class ConsoleClient {
     private Game game;
     private final Scanner input;
 
-    public ConsoleClient() {
+    public ConsoleClient() throws Exception{
         input = new Scanner(System.in);
         setUpConfiguration();
         setUpGame();
@@ -21,7 +21,7 @@ public class ConsoleClient {
         String isComputerPlayingInput = input.next();
 
         askForBoardSize();
-        int boardSize = playerInput();
+        int boardSize = boardSizeInput();
 
         gameConfig = new GameConfiguration(boardSize, answerToPlayWithComputer(isComputerPlayingInput));
     }
@@ -36,7 +36,7 @@ public class ConsoleClient {
             int value;
             if (!game.getCurrentPlayer().isComputer()) {
                 askPlayerToMakeMove();
-                value = convertInputToLocation(playerInput());
+                value = convertInputToLocation(moveInput());
             } else {
                 value = game.getFirstAvailableMove();
 
@@ -52,7 +52,7 @@ public class ConsoleClient {
         return this.game;
     }
 
-    private void setUpGame() {
+    private void setUpGame() throws Exception{
         game = new Game(gameConfig);
     }
 
@@ -153,7 +153,7 @@ public class ConsoleClient {
         return formattedCell.toString();
     }
 
-    private int playerInput() {
+    private int boardSizeInput() {
         try {
             int value = input.nextInt();
 
@@ -167,13 +167,25 @@ public class ConsoleClient {
         catch (InputMismatchException e) {
             System.out.println(wrongTypeMessage());
             input.nextLine();
-            return  playerInput();
+            return  boardSizeInput();
         }
 
         catch (Exception e) {
             System.out.println(negativeBoardSize());
             input.nextLine();
-            return  playerInput();
+            return  boardSizeInput();
+        }
+    }
+
+    private int moveInput() {
+        try {
+            return input.nextInt();
+        }
+
+        catch (Exception e) {
+            System.out.println(wrongTypeMessage());
+            input.nextLine();
+            return  moveInput();
         }
     }
 

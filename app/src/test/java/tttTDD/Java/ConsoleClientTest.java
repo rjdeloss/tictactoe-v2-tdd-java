@@ -32,7 +32,7 @@ public class ConsoleClientTest {
     public void consoleAsksIfItsAHumanVSHuman() {
         String input = "y 3";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
 
         Assert.assertTrue(terminal.toString().contains("Is this a Human vs Human Game? [y/n]"));
         Assert.assertFalse(console.getGame().isTheGameComplete());
@@ -43,7 +43,7 @@ public class ConsoleClientTest {
     public void consoleDefaultsToHumanVsComputerWithAnyOtherAnswer() {
         String input = "n 3";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
 
         Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
         Assert.assertTrue(console.getGame().checkPlayer2AIStatus());
@@ -53,15 +53,25 @@ public class ConsoleClientTest {
     public void consoleSetsUpGameWithDefaultBoardSizeAnd2HumanPlayers() {
         String input = "y 3";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
 
         Assert.assertFalse(console.getGame().checkPlayer1AIStatus());
         Assert.assertFalse(console.getGame().checkPlayer2AIStatus());
     }
 
     @Test
-    public void playerInputShouldPromptAReentryIfTheInputIsNotAValidInput() {
-        String input = "y three \n 3";
+    public void consoleSetsUpGameWithDefaultBoardSizeShouldPromptPlayerMultipleTimes() throws Exception {
+        String input = "y -1 \n three \n -1 \n 3";
+        setInput(input);
+        console = new ConsoleClient();
+
+        Assert.assertTrue(terminal.toString().contains("Can't have the Universe implode on us. Try a larger number:"));
+        Assert.assertTrue(terminal.toString().contains("Stop it. Enter a number as an input:"));
+    }
+
+    @Test
+    public void playerInputShouldPromptAReentryIfTheInputIsNotAValidInput() throws Exception{
+        String input = "y three \n 1 \n 2 \n 3";
         setInput(input);
         console = new ConsoleClient();
 
@@ -73,7 +83,7 @@ public class ConsoleClientTest {
     public void consoleRunnerAskForBoardSizeInput() {
         String input = "y 4 1 5 2 6 3 7 4";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("Please enter a board size number:"));
@@ -84,7 +94,7 @@ public class ConsoleClientTest {
     public void consoleRendersDefaultBoardAfterSelectingGameType() {
         String input = "y 3 1 3 2 5 4 7";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("1 |2 |3\n--+--+--\n4 |5 |6\n--+--+--\n7 |8 |9"));
@@ -94,7 +104,7 @@ public class ConsoleClientTest {
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMove() {
         String input = "n 3 1 4 7";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("Make your move:"));
@@ -104,7 +114,7 @@ public class ConsoleClientTest {
     public void boardShouldUpdateWithPlayerInput() {
         String input = "y 3 1 3 2 5 4 7";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("1 |2 |3\n--+--+--\n4 |5 |6\n--+--+--\n7 |8 |9"));
@@ -112,7 +122,7 @@ public class ConsoleClientTest {
     }
 
     @Test
-    public void consoleLoopShouldPromptCurrentPlayerToPerformAMoveAgainIfCellIsTaken() {
+    public void consoleLoopShouldPromptCurrentPlayerToPerformAMoveAgainIfCellIsTaken() throws Exception {
         String input = "n 3 1 1 4 7";
         setInput(input);
         console = new ConsoleClient();
@@ -125,7 +135,7 @@ public class ConsoleClientTest {
     public void consoleShouldRenderAMessageWithTheWinnerOfTheGame() {
         String input = "n 3 1 4 7";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("Player X has won"));
@@ -135,9 +145,19 @@ public class ConsoleClientTest {
     public void consoleShouldRenderAMessageWhenGameEndsInATie() {
         String input = "y 3 5 1 2 3 7 4 6 8 9";
         setInput(input);
-        console = new ConsoleClient();
+        console = createConsoleWithoutException();
         console.startGame();
 
         Assert.assertTrue(terminal.toString().contains("It's a tie"));
+    }
+
+    private ConsoleClient createConsoleWithoutException() {
+        try {
+            return new ConsoleClient();
+        }
+
+        catch (Exception e){
+            return null;
+        }
     }
 }

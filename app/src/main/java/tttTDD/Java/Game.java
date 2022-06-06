@@ -11,7 +11,7 @@ public class Game {
     private Player player2;
 
 
-    public Game(GameConfiguration gameConfig) {
+    public Game(GameConfiguration gameConfig) throws Exception {
         board = new Board(gameConfig.getBoardSizeConfiguration());
         initializePlayers(gameConfig.isComputerPlaying());
         currentPlayer = player1;
