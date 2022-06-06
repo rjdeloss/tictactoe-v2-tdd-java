@@ -18,4 +18,9 @@ public class Computer implements Player {
     public boolean isComputer() {
         return true;
     }
+
+    @Override
+    public int move(Board board) {
+        return board.getFirstAvailableMove();
+    }
 }
