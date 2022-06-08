@@ -1,5 +1,7 @@
 package tttTDD.Java;
 
+import tttTDD.Java.Interfaces.Player;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -33,16 +35,11 @@ public class ConsoleClient {
 
     public void consoleLoop() {
         while (!game.isTheGameComplete()) {
-            int value;
             if (!game.getCurrentPlayer().isComputer()) {
                 askPlayerToMakeMove();
-                value = convertInputToLocation(moveInput());
-            } else {
-                value = game.getFirstAvailableMove();
-
             }
 
-            performPlayerTurn(value);
+            performPlayerTurn();
         }
 
         printGameResult();
@@ -53,12 +50,12 @@ public class ConsoleClient {
     }
 
     private void setUpGame() throws Exception{
-        game = new Game(gameConfig);
+        game = new Game(gameConfig, input);
     }
 
-    private void performPlayerTurn(int value) {
-        if (game.performTurn(value)) {
-            printTheMovePerformed(value);
+    private void performPlayerTurn() {
+        if (game.performTurn(game.getCurrentPlayer())) {
+            printTheMovePerformed(game.getCurrentPlayerPreviousMove());
             renderBoard();
         } else {
             askPlayerToPlayAgain();
@@ -71,7 +68,7 @@ public class ConsoleClient {
 
     private void printTheMovePerformed(int value) {
         String marker = game.getCurrentPlayer().getMarker().equals(game.getPlayer1Marker()) ? game.getPlayer2Marker() : game.getPlayer1Marker();
-        String message = String.format("Player %s has made a move on space %s", marker, convertLocationToInput(value));
+        String message = String.format("Player %s has made a move on space %s", marker, value);
         System.out.println(message);
     }
 

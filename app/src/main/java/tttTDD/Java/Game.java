@@ -2,6 +2,8 @@ package tttTDD.Java;
 
 import tttTDD.Java.Interfaces.Player;
 
+import java.util.Scanner;
+
 public class Game {
     private Player currentPlayer;
     private boolean gameCompleted;
@@ -9,9 +11,18 @@ public class Game {
     private final Board board;
     private Player player1;
     private Player player2;
+    private Scanner input;
 
 
     public Game(GameConfiguration gameConfig) throws Exception {
+        board = new Board(gameConfig.getBoardSizeConfiguration());
+        initializePlayers(gameConfig.isComputerPlaying());
+        currentPlayer = player1;
+        gameCompleted = false;
+    }
+
+    public Game(GameConfiguration gameConfig, Scanner playerInput) throws Exception {
+        this.input = playerInput;
         board = new Board(gameConfig.getBoardSizeConfiguration());
         initializePlayers(gameConfig.isComputerPlaying());
         currentPlayer = player1;
@@ -38,6 +49,14 @@ public class Game {
         return currentPlayer;
     }
 
+    public int getCurrentPlayerMove(Board board) {
+        return currentPlayer.move(board);
+    }
+
+    public int getCurrentPlayerPreviousMove() {
+        return currentPlayer.getMarker().equals(player1.getMarker()) ? player2.getPreviousMove() : player1.getPreviousMove();
+    }
+
     public boolean checkPlayer1AIStatus() {
         return player1.isComputer();
     }
@@ -62,8 +81,8 @@ public class Game {
         return board.getFirstAvailableMove();
     }
 
-    public boolean performTurn(int playerInput) {
-        int input = !currentPlayer.isComputer() ? playerInput : board.getFirstAvailableMove();
+    public boolean performTurn(Player currentPlayer) {
+        int input = currentPlayer.move(board);
 
         if (board.updateBoard(input, currentPlayer.getMarker())) {
             gameCompleted = gameHasFinished();
@@ -90,8 +109,8 @@ public class Game {
     }
 
     private void initializePlayers(boolean areWePlayingComputer) {
-        player1 = new Human("X");
-        player2 = areWePlayingComputer ? new Computer("O") : new Human("O");
+        player1 = new Human("X", this.input);
+        player2 = areWePlayingComputer ? new Computer("O") : new Human("O", this.input);
     }
 
     private void swap() {
