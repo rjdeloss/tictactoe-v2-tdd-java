@@ -4,6 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tttTDD.Java.Interfaces.Player;
+import tttTDD.Java.doubles.TestPlayer;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 
 public class GameTest {
@@ -11,6 +15,12 @@ public class GameTest {
     GameConfiguration gameConfig;
     Player player1;
     Player player2;
+    Player testPlayer;
+
+    private void setInput(String value) {
+        InputStream in = new ByteArrayInputStream(value.getBytes());
+        System.setIn(in);
+    }
 
     @Before
     public void setup() {
@@ -22,39 +32,46 @@ public class GameTest {
     @Test
     public void PlayerShouldUpdateBoardWithinTheGame3x3() {
         // Arrange
-        int playerInput = 3;
+        int[] playerInput = {3};
+        testPlayer = new TestPlayer("X", playerInput);
+
         game = createGameWithoutException(gameConfig);
 
         // Act
-        game.performTurn(playerInput);
+        boolean result = game.performTurn(testPlayer);
 
         // Assert
-        Assert.assertNotEquals(game.performTurn(playerInput), false);
+        Assert.assertTrue(result);
     }
 
     @Test
     public void PerformTurnShouldReturnFalseWhenASpaceIsTaken() {
+        // Arrange
         game = createGameWithoutException(gameConfig);
-        int[] humanMoves = {0, 1, 0};
+        int[] moves = {0, 1};
         // Moves played by computer => 1
+        performGameTurns(moves);
 
-        performGameTurns(humanMoves);
+        // Act
+        int [] invalidMove = {0};
+        testPlayer = new TestPlayer("X", invalidMove);
+        boolean result = game.performTurn(testPlayer);
 
-        Assert.assertFalse(game.performTurn(humanMoves[1]));
+        // Assert
+        Assert.assertFalse(result);
     }
 
     @Test
     public void GameShouldSwapPlayersAfterSuccessfulMoveOnTheBoard() {
-        int playerInput = 3;
+        int[] playerInput = {3};
         game = createGameWithoutException(gameConfig);
-
+        testPlayer = new TestPlayer("X", playerInput);
         // Act
-        Player playerMakingMove = game.getCurrentPlayer();
-        game.performTurn(playerInput);
-        Player nextPlayer = game.getCurrentPlayer();
+        game.performTurn(testPlayer);
 
         // Assert
-        Assert.assertNotEquals(playerMakingMove.getMarker(), nextPlayer.getMarker());
+        Player nextPlayer = game.getCurrentPlayer();
+        Assert.assertNotEquals(testPlayer.getMarker(), nextPlayer.getMarker());
     }
 
     @Test
@@ -70,37 +87,6 @@ public class GameTest {
         game = createGameWithoutException(gameConfig);
 
         Assert.assertTrue(game.checkPlayer2AIStatus());
-    }
-
-    @Test
-    public void ComputerShouldTakeTheFirstAvailableMoveAtLocation0() {
-        game = createGameWithoutException(gameConfig);
-        int[] playerInputs = {3, 2};
-
-        performGameTurns(playerInputs);
-
-        Assert.assertEquals(game.getBoardSpace(0), game.getPlayer2Marker());
-    }
-
-    @Test
-    public void ComputerShouldTakeTheFirstAvailableMoveAtLocation4() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {3, 5, 2, 7, 6, 9};
-        // Moves played by computer => 5, 7, 9
-
-        performGameTurns(movesPlayed);
-
-        Assert.assertEquals(game.getBoardSpace(4), game.getPlayer2Marker());
-    }
-
-    @Test
-    public void GameShouldProvideFirstAvailableMoveForComputerPlayerFromTheBoard() {
-        game = createGameWithoutException(gameConfig);
-        int playerInput = 0;
-
-        game.performTurn(playerInput);
-
-        Assert.assertEquals(game.getBoardFirstAvailableMove(), 1);
     }
 
     @Test
@@ -173,8 +159,18 @@ public class GameTest {
     }
 
     private void performGameTurns(int[] moves) {
-        for(int location : moves) {
-            game.performTurn(location);
+        for(int i = 0; i < moves.length; i++) {
+            int location = moves[i];
+            testPlayer = i % 2 == 0 ? new TestPlayer("X", new int[] {location}) : new TestPlayer("O", new int[] {location});
+            game.performTurn(testPlayer);
+        }
+    }
+
+    private void performHumanGameTurns(int[] moves) {
+        for(int i = 0; i < moves.length; i++) {
+            int location = moves[i];
+            testPlayer = i % 2 == 0 ? new TestPlayer("X", new int[] {location}) : new TestPlayer("O", new int[] {location});
+            game.performTurn(testPlayer);
         }
     }
 
