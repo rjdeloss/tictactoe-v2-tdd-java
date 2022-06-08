@@ -4,15 +4,15 @@ import tttTDD.Java.Interfaces.Player;
 
 import java.util.Scanner;
 
-public class Computer implements Player {
+public class RandomComputer implements Player {
     private final String marker;
     private int previousMove;
 
-    public Computer(String marker) {
+    public RandomComputer(String marker) {
         this.marker = marker;
     }
 
-    public Computer(String marker, Scanner sc) {
+    public RandomComputer(String marker, Scanner sc) {
         this.marker = marker;
     }
 

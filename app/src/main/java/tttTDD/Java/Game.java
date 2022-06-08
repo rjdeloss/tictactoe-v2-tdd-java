@@ -81,10 +81,10 @@ public class Game {
         return board.getFirstAvailableMove();
     }
 
-    public boolean performTurn(Player currentPlayer) {
-        int input = currentPlayer.move(board);
+    public boolean performTurn(Player playerMakingMove) {
+        int input = playerMakingMove.move(board);
 
-        if (board.updateBoard(input, currentPlayer.getMarker())) {
+        if (board.updateBoard(input, playerMakingMove.getMarker())) {
             gameCompleted = gameHasFinished();
             swap();
         } else {
