@@ -4,16 +4,25 @@ import tttTDD.Java.Interfaces.Player;
 import java.util.Scanner;
 
 public class Human implements Player {
-    private String marker;
-    private Scanner input;
+    private final String marker;
+    private Scanner playerInput;
+    private int previousMove;
+
+    Human(String marker) {
+        this.marker = marker;
+    }
 
     Human(String marker, Scanner sc) {
         this.marker = marker;
-        this.input = sc;
+        this.playerInput = sc;
     }
 
     public String getMarker() {
         return this.marker;
+    }
+
+    public int getPreviousMove() {
+        return this.previousMove;
     }
 
     public boolean isComputer() {
@@ -22,6 +31,21 @@ public class Human implements Player {
 
     @Override
     public int move(Board board) {
-        return this.input.nextInt();
+        try {
+            int move = playerInput.nextInt();
+            previousMove = move;
+
+            return convertInputToLocation(move);
+        }
+
+        catch (Exception e) {
+            System.out.println("Stop it. Enter a number as an input:");
+            playerInput.nextLine();
+            return  move(board);
+        }
+    }
+
+    private int convertInputToLocation(int value) {
+        return value - 1;
     }
 }

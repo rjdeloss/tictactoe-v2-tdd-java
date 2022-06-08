@@ -4,6 +4,7 @@ import tttTDD.Java.Interfaces.Player;
 
 public class Computer implements Player {
     private final String marker;
+    private int previousMove;
 
     public Computer(String marker) {
         this.marker = marker;
@@ -21,6 +22,12 @@ public class Computer implements Player {
 
     @Override
     public int move(Board board) {
-        return board.getFirstAvailableMove();
+        previousMove = board.getFirstAvailableMove();
+        return previousMove;
+    }
+
+    @Override
+    public int getPreviousMove() {
+        return previousMove;
     }
 }

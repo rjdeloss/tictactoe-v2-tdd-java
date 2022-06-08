@@ -6,4 +6,6 @@ public interface Player {
     String getMarker();
     boolean isComputer();
     int move(Board board);
+
+    int getPreviousMove();
 }
