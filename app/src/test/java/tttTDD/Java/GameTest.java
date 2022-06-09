@@ -17,16 +17,11 @@ public class GameTest {
     Player player2;
     Player testPlayer;
 
-    private void setInput(String value) {
-        InputStream in = new ByteArrayInputStream(value.getBytes());
-        System.setIn(in);
-    }
-
     @Before
     public void setup() {
-        gameConfig = new GameConfiguration(3, true);
         player1 = new Human("X");
         player2 = new Computer("O");
+        gameConfig = new GameConfiguration(3, player1, player2);
     }
 
     @Test
