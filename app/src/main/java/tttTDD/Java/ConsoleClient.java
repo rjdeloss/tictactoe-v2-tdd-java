@@ -199,7 +199,7 @@ public class ConsoleClient {
     }
 
     private String askForMarker() {
-        System.out.println("What's your marker:");
+        System.out.println("What's this player's marker:");
         return input.next();
     }
 }
