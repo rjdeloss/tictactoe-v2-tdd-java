@@ -16,7 +16,7 @@ public class Game {
 
     public Game(GameConfiguration gameConfig) throws Exception {
         board = new Board(gameConfig.getBoardSizeConfiguration());
-        initializePlayers(gameConfig.isComputerPlaying());
+        initializePlayers(gameConfig);
         currentPlayer = player1;
         gameCompleted = false;
     }
@@ -24,7 +24,7 @@ public class Game {
     public Game(GameConfiguration gameConfig, Scanner playerInput) throws Exception {
         this.input = playerInput;
         board = new Board(gameConfig.getBoardSizeConfiguration());
-        initializePlayers(gameConfig.isComputerPlaying());
+        initializePlayers(gameConfig);
         currentPlayer = player1;
         gameCompleted = false;
     }
@@ -49,10 +49,6 @@ public class Game {
         return currentPlayer;
     }
 
-    public int getCurrentPlayerMove(Board board) {
-        return currentPlayer.move(board);
-    }
-
     public int getCurrentPlayerPreviousMove() {
         return currentPlayer.getMarker().equals(player1.getMarker()) ? player2.getPreviousMove() : player1.getPreviousMove();
     }
@@ -67,14 +63,6 @@ public class Game {
 
     public String[] getBoard() {
         return board.getBoard();
-    }
-
-    public String getBoardSpace(int location) {
-        return  board.getSpace(location);
-    }
-
-    public int getBoardFirstAvailableMove() {
-        return board.getFirstAvailableMove();
     }
 
     public int getFirstAvailableMove() {
@@ -108,9 +96,9 @@ public class Game {
         return board.hasWinningSet(currentPlayer.getMarker());
     }
 
-    private void initializePlayers(boolean areWePlayingComputer) {
-        player1 = new Human("X", this.input);
-        player2 = areWePlayingComputer ? new Computer("O") : new Human("O", this.input);
+    private void initializePlayers(GameConfiguration gameConfig) {
+        player1 = gameConfig.getPlayer1();
+        player2 = gameConfig.getPlayer2();
     }
 
     private void swap() {
