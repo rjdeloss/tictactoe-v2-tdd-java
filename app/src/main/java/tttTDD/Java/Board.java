@@ -37,6 +37,10 @@ public class Board {
         return convertToLocation(availableMoves[0]);
     }
 
+    public String[] getAvailableMoves() {
+        return generateAvailableMoves(board);
+    }
+
     public boolean updateBoard(int location, String marker) {
         if (isSpaceAvailable(location)) {
             this.board[location] = marker;

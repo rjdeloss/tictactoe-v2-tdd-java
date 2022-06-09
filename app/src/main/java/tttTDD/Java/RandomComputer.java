@@ -28,12 +28,19 @@ public class RandomComputer implements Player {
 
     @Override
     public int move(Board board) {
-        previousMove = board.getFirstAvailableMove();
+        String[] availableMoves = board.getAvailableMoves();
+        int location = (int) Math.floor((Math.random()*(availableMoves.length)));
+        previousMove = convertToLocation(availableMoves[location]);
+
         return previousMove;
     }
 
     @Override
     public int getPreviousMove() {
         return previousMove;
+    }
+
+    private int convertToLocation(String space) {
+        return Integer.parseInt(space) - 1;
     }
 }
