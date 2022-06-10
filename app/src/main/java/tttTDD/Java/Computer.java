@@ -34,6 +34,6 @@ public class Computer implements Player {
 
     @Override
     public int getPreviousMove() {
-        return previousMove;
+        return previousMove + 1;
     }
 }

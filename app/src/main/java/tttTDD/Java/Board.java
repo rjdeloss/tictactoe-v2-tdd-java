@@ -33,11 +33,11 @@ public class Board {
     }
 
     public int getFirstAvailableMove() {
-        String[] availableMoves = generateAvailableMoves(board);
-        return convertToLocation(availableMoves[0]);
+        Integer[] availableMoves = generateAvailableMoves(board);
+        return availableMoves[0];
     }
 
-    public String[] getAvailableMoves() {
+    public Integer[] getAvailableMoves() {
         return generateAvailableMoves(board);
     }
 
@@ -63,7 +63,7 @@ public class Board {
     }
 
     public boolean hasNoMoreMoves() {
-        String[] availableMoves = generateAvailableMoves(board);
+        Integer[] availableMoves = generateAvailableMoves(board);
         return availableMoves.length == 0;
     }
 
@@ -90,16 +90,17 @@ public class Board {
         return (location < 0) || (location > numberOfSpaces - 1);
     }
 
-    private String[] generateAvailableMoves(String[] board) {
-        ArrayList<String> availableMovesArray = new ArrayList<>();
+    private Integer[] generateAvailableMoves(String[] board) {
+        ArrayList<Integer> availableMovesArray = new ArrayList<>();
 
         for (int i = 0; i < board.length; i++) {
             if (isSpaceAvailable(i)) {
-                availableMovesArray.add(board[i]);
+                int formattedMoveToLocation = convertToLocation(board[i]);
+                availableMovesArray.add(formattedMoveToLocation);
             }
         }
 
-        return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), String[].class);
+        return Arrays.copyOf(availableMovesArray.toArray(), availableMovesArray.size(), Integer[].class);
     }
 
     private String[] mapBoardMovesToSet(int[] set) {
