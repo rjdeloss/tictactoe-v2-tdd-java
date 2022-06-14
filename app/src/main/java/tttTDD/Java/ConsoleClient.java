@@ -2,7 +2,6 @@ package tttTDD.Java;
 
 import tttTDD.Java.Interfaces.Player;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleClient {
@@ -20,7 +19,7 @@ public class ConsoleClient {
     }
 
     public void startGame() {
-        display.renderBoard(game, gameConfig.getBoardSizeConfiguration());
+        display.render(display.renderBoard(game, gameConfig.getBoardSizeConfiguration()));
         consoleLoop();
     }
 
@@ -50,10 +49,13 @@ public class ConsoleClient {
 
     private void performPlayerTurn() {
         if (game.performTurn(game.getCurrentPlayerMove())) {
-            System.out.println(display.showMovePerformedMessage(game, game.getCurrentPlayerPreviousMove()));;
-            System.out.println(display.renderBoard(game, gameConfig.getBoardSizeConfiguration()));;
+            String movePerformedMessage = display.showMovePerformedMessage(game, game.getCurrentPlayerPreviousMove());
+            String gameBoard = display.renderBoard(game, gameConfig.getBoardSizeConfiguration());
+
+            display.render(movePerformedMessage);
+            display.render(gameBoard);
         } else {
-            System.out.println(display.tryAgainMessage());
+            display.render(display.tryAgainMessage());
         }
     }
 
@@ -63,61 +65,12 @@ public class ConsoleClient {
 
     private int askForBoardSize() {
         System.out.println(display.enterBoardSizeMessage());
-        return boardSizeInput();
-    }
-
-    private int boardSizeInput() {
-        try {
-            int value = input.nextInt();
-
-            if (value > 2) {
-                return value;
-            } else {
-                throw new Exception();
-            }
-        }
-
-        catch (InputMismatchException e) {
-            System.out.println(display.wrongTypeMessage());
-            input.nextLine();
-            return  boardSizeInput();
-        }
-
-        catch (Exception e) {
-            System.out.println(display.negativeBoardSizeMessage());
-            input.nextLine();
-            return  boardSizeInput();
-        }
-    }
-
-    private int playerSelectionInput() {
-        int value;
-
-        try {
-            value = input.nextInt();
-            if (value > 0 || value < 4) {
-                return value;
-            }
-        }
-
-        catch (Exception e) {
-            System.out.println(display.wrongTypeMessage());
-            input.nextLine();
-            return  playerSelectionInput();
-        }
-
-        return value;
+        return GameInput.boardSize(input, display);
     }
 
     private Player askToCreatePlayer(String marker) {
-        int selection = askForPlayerType();
-
-        return  playerFactory.createPlayer(selection, marker, input);
-    }
-
-    private int askForPlayerType() {
         System.out.println(display.playerSelectionMessage());
-
-        return playerSelectionInput();
+        int playerType = GameInput.playerSelection(input, display);
+        return  playerFactory.createPlayer(playerType, marker, input);
     }
 }
