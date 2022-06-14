@@ -2,11 +2,11 @@ package tttTDD.Java;
 
 import tttTDD.Java.Interfaces.Player;
 
-public class Computer implements Player {
+public class RandomComputer implements Player {
     private final String marker;
     private int previousMove;
 
-    public Computer(String marker) {
+    public RandomComputer(String marker) {
         this.marker = marker;
     }
 
@@ -22,7 +22,10 @@ public class Computer implements Player {
 
     @Override
     public int move(Board board) {
-        previousMove = board.getFirstAvailableMove();
+        Integer[] availableMoves = board.getAvailableMoves();
+        int location = (int) Math.floor((Math.random()*(availableMoves.length)));
+        previousMove = availableMoves[location];
+
         return previousMove;
     }
 

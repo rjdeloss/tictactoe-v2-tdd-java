@@ -2,6 +2,8 @@ package tttTDD.Java;
 
 import tttTDD.Java.Interfaces.Player;
 
+import java.util.Scanner;
+
 public class Game {
     private Player currentPlayer;
     private boolean gameCompleted;
@@ -13,7 +15,7 @@ public class Game {
 
     public Game(GameConfiguration gameConfig) throws Exception {
         board = new Board(gameConfig.getBoardSizeConfiguration());
-        initializePlayers(gameConfig.isComputerPlaying());
+        initializePlayers(gameConfig);
         currentPlayer = player1;
         gameCompleted = false;
     }
@@ -38,6 +40,14 @@ public class Game {
         return currentPlayer;
     }
 
+    public int getCurrentPlayerMove() {
+        return currentPlayer.move(board);
+    }
+
+    public int getCurrentPlayerPreviousMove() {
+        return currentPlayer.getMarker().equals(player1.getMarker()) ? player2.getPreviousMove() : player1.getPreviousMove();
+    }
+
     public boolean checkPlayer1AIStatus() {
         return player1.isComputer();
     }
@@ -50,22 +60,8 @@ public class Game {
         return board.getBoard();
     }
 
-    public String getBoardSpace(int location) {
-        return  board.getSpace(location);
-    }
-
-    public int getBoardFirstAvailableMove() {
-        return board.getFirstAvailableMove();
-    }
-
-    public int getFirstAvailableMove() {
-        return board.getFirstAvailableMove();
-    }
-
-    public boolean performTurn(int playerInput) {
-        int input = !currentPlayer.isComputer() ? playerInput : board.getFirstAvailableMove();
-
-        if (board.updateBoard(input, currentPlayer.getMarker())) {
+    public boolean performTurn(int playerMove) {
+        if (board.updateBoard(playerMove, currentPlayer.getMarker())) {
             gameCompleted = gameHasFinished();
             swap();
         } else {
@@ -89,9 +85,9 @@ public class Game {
         return board.hasWinningSet(currentPlayer.getMarker());
     }
 
-    private void initializePlayers(boolean areWePlayingComputer) {
-        player1 = new Human("X");
-        player2 = areWePlayingComputer ? new Computer("O") : new Human("O");
+    private void initializePlayers(GameConfiguration gameConfig) {
+        player1 = gameConfig.getPlayer1();
+        player2 = gameConfig.getPlayer2();
     }
 
     private void swap() {

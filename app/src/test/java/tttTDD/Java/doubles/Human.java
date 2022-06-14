@@ -1,13 +1,20 @@
-package tttTDD.Java;
+package tttTDD.Java.doubles;
 
+import tttTDD.Java.Board;
 import tttTDD.Java.Interfaces.Player;
 
-public class Computer implements Player {
+public class Human implements Player {
     private final String marker;
     private int previousMove;
+    private int[] moves;
 
-    public Computer(String marker) {
+    public Human(String marker) {
         this.marker = marker;
+    }
+
+    public Human(String marker, int[] moves) {
+        this.marker = marker;
+        this.moves = moves;
     }
 
     @Override
@@ -17,17 +24,16 @@ public class Computer implements Player {
 
     @Override
     public boolean isComputer() {
-        return true;
+        return false;
     }
 
     @Override
     public int move(Board board) {
-        previousMove = board.getFirstAvailableMove();
-        return previousMove;
+        return moves[0];
     }
 
     @Override
     public int getPreviousMove() {
-        return previousMove + 1;
+        return 0;
     }
 }

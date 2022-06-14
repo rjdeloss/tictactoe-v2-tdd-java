@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tttTDD.Java.Interfaces.Player;
+import tttTDD.Java.doubles.TestPlayer;
 
 
 public class GameTest {
@@ -11,50 +12,59 @@ public class GameTest {
     GameConfiguration gameConfig;
     Player player1;
     Player player2;
+    Player testPlayer;
 
     @Before
     public void setup() {
-        gameConfig = new GameConfiguration(3, true);
         player1 = new Human("X");
         player2 = new Computer("O");
+        gameConfig = new GameConfiguration(3, player1, player2);
     }
 
     @Test
     public void PlayerShouldUpdateBoardWithinTheGame3x3() {
         // Arrange
-        int playerInput = 3;
+        int[] playerInput = {3};
+        testPlayer = new TestPlayer("X", playerInput);
+
         game = createGameWithoutException(gameConfig);
 
         // Act
-        game.performTurn(playerInput);
+        boolean result = game.performTurn(testPlayer.move(new Board()));
 
         // Assert
-        Assert.assertNotEquals(game.performTurn(playerInput), false);
+        Assert.assertTrue(result);
     }
 
     @Test
     public void PerformTurnShouldReturnFalseWhenASpaceIsTaken() {
-        game = createGameWithoutException(gameConfig);
-        int[] humanMoves = {0, 1, 0};
-        // Moves played by computer => 1
+        // Arrange
+        Player player1 = new TestPlayer("X", new int[]{0, 0});
+        Player player2 = new TestPlayer("O", new int[]{1});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(humanMoves);
+        // Act
+        game.performTurn(game.getCurrentPlayerMove());
+        game.performTurn(game.getCurrentPlayerMove());
+        boolean result = game.performTurn(game.getCurrentPlayerMove());
 
-        Assert.assertFalse(game.performTurn(humanMoves[1]));
+        // Assert
+        Assert.assertFalse(result);
     }
 
     @Test
     public void GameShouldSwapPlayersAfterSuccessfulMoveOnTheBoard() {
-        int playerInput = 3;
-        game = createGameWithoutException(gameConfig);
-
+        Player player1 = new TestPlayer("X", new int[]{3});
+        Player player2 = new TestPlayer("O", new int[]{});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
         // Act
-        Player playerMakingMove = game.getCurrentPlayer();
-        game.performTurn(playerInput);
-        Player nextPlayer = game.getCurrentPlayer();
+        game.performTurn(game.getCurrentPlayerMove());
 
         // Assert
-        Assert.assertNotEquals(playerMakingMove.getMarker(), nextPlayer.getMarker());
+        Player nextPlayer = game.getCurrentPlayer();
+        Assert.assertNotEquals(player1.getMarker(), nextPlayer.getMarker());
     }
 
     @Test
@@ -73,65 +83,37 @@ public class GameTest {
     }
 
     @Test
-    public void ComputerShouldTakeTheFirstAvailableMoveAtLocation0() {
-        game = createGameWithoutException(gameConfig);
-        int[] playerInputs = {3, 2};
-
-        performGameTurns(playerInputs);
-
-        Assert.assertEquals(game.getBoardSpace(0), game.getPlayer2Marker());
-    }
-
-    @Test
-    public void ComputerShouldTakeTheFirstAvailableMoveAtLocation4() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {3, 5, 2, 7, 6, 9};
-        // Moves played by computer => 5, 7, 9
-
-        performGameTurns(movesPlayed);
-
-        Assert.assertEquals(game.getBoardSpace(4), game.getPlayer2Marker());
-    }
-
-    @Test
-    public void GameShouldProvideFirstAvailableMoveForComputerPlayerFromTheBoard() {
-        game = createGameWithoutException(gameConfig);
-        int playerInput = 0;
-
-        game.performTurn(playerInput);
-
-        Assert.assertEquals(game.getBoardFirstAvailableMove(), 1);
-    }
-
-    @Test
     public void ChangeGameStateGameCompletedToTrueIfWinningSetFound() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {0, 1, 3, 2, 6};
-        // Moves played by computer => 1, 2
+        Player player1 = new TestPlayer("X", new int[]{0, 3, 6});
+        Player player2 = new TestPlayer("O", new int[]{1, 2});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(movesPlayed);
+        playTurns(game);
 
         Assert.assertTrue(game.isTheGameComplete());
     }
 
     @Test
     public void ChangeGameStateGameCompletedToFalseIfWinningSetNotFound() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {8, 1, 3, 2};
-        // Moves played by computer => 1, 2
+        Player player1 = new TestPlayer("X", new int[]{8, 3});
+        Player player2 = new TestPlayer("O", new int[]{1, 2});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(movesPlayed);
+        playTurns(game);
 
         Assert.assertFalse(game.isTheGameComplete());
     }
 
     @Test
     public void GameShouldListIfTheGameHasConcludedAndWinner() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {0, 1, 3, 2, 6};
-        // Moves played by computer => 1, 2
+        Player player1 = new TestPlayer("X", new int[]{0, 3, 6});
+        Player player2 = new TestPlayer("O", new int[]{1, 2});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(movesPlayed);
+        playTurns(game);
 
         Assert.assertTrue(game.isTheGameComplete());
         Assert.assertEquals(game.wonBy(), "Player X has won");
@@ -139,11 +121,12 @@ public class GameTest {
 
     @Test
     public void GameShouldListIfTheGameHasConcludedAndAComputerWon() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {0, 1, 3, 2, 5, 4, 8, 7};
-        // Moves played by computer => 1, 2, 4, 7
+        Player player1 = new TestPlayer("X", new int[]{0, 3, 5, 8});
+        Player player2 = new TestPlayer("O", new int[]{1, 2, 4, 7});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(movesPlayed);
+        playTurns(game);
 
         Assert.assertTrue(game.isTheGameComplete());
         Assert.assertEquals(game.wonBy(), "Player O has won");
@@ -151,30 +134,40 @@ public class GameTest {
 
     @Test
     public void GameShouldNotListWinnerIfTheGameConcludedAsATie() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {4, 0, 1, 2, 6, 3, 5, 7, 8};
-        // Moves played by computer => 0, 2, 3, 7
+        Player player1 = new TestPlayer("X", new int[]{4, 1, 6, 5, 8});
+        Player player2 = new TestPlayer("O", new int[]{0, 2, 3, 7});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(movesPlayed);
+        playTurns(game);
 
         Assert.assertTrue(game.isTheGameComplete());
         Assert.assertEquals(game.wonBy(), "It's a tie");
     }
 
     @Test
-    public void getFirstAvailableMoveReturnsTheFirstAvailableMoveFromTheBoard() {
-        game = createGameWithoutException(gameConfig);
-        int[] movesPlayed = {4, 0};
-        // Moves played by computer => 0
+    public void testPlayerSetup() {
+        Player player1 = new TestPlayer("X", new int[]{1, 2, 4, 7});
+        Player player2 = new TestPlayer("O", new int[]{8, 3, 6});
+        GameConfiguration configuration = new GameConfiguration(3, player1, player2);
+        Game game = createGameWithoutException(configuration);
 
-        performGameTurns(movesPlayed);
-
-        Assert.assertEquals(game.getFirstAvailableMove(), 1);
+        Assert.assertEquals(1, game.getCurrentPlayerMove());
+        game.performTurn(1);
+        Assert.assertEquals(8, game.getCurrentPlayerMove());
+        game.performTurn(8);
+        Assert.assertEquals(2, game.getCurrentPlayerMove());
     }
 
-    private void performGameTurns(int[] moves) {
-        for(int location : moves) {
-            game.performTurn(location);
+    private void playTurns(Game game) {
+        try  {
+            while (!game.isTheGameComplete()) {
+                int move = game.getCurrentPlayerMove();
+                game.performTurn(move);
+            }
+        }
+        catch  (ArrayIndexOutOfBoundsException e) {
+
         }
     }
 

@@ -28,6 +28,16 @@ public class BoardTest {
     }
 
     @Test
+    public void boardShouldThrowAnExceptionWithABoardSizeSmallerThan3() {
+        Exception exception =  Assert.assertThrows(Exception.class, () -> {
+            board = new Board(2);
+        });
+        String actualMessage = exception.getMessage();
+
+        Assert.assertTrue(actualMessage.contains("This board is too small"));
+    }
+
+    @Test
     public void getBoardSpace() {
         board = createBoardWithoutExceptions();
 
