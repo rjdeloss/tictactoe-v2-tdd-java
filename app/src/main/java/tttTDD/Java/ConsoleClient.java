@@ -8,9 +8,9 @@ public class ConsoleClient {
     private PlayerFactory playerFactory = new PlayerFactory();
     private Display display = new Display();
 
-    private Game game;
-    private final Scanner input;
     private GameConfiguration gameConfig;
+    private final Scanner input;
+    private Game game;
 
     public ConsoleClient() throws Exception{
         input = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class ConsoleClient {
     public void consoleLoop() {
         while (!game.isTheGameComplete()) {
             if (!game.getCurrentPlayer().isComputer()) {
-                System.out.println(display.makeMoveMessage());
+                display.render(display.makeMoveMessage());
             }
 
             performPlayerTurn();
@@ -60,16 +60,16 @@ public class ConsoleClient {
     }
 
     private void printGameResult() {
-        System.out.println(game.wonBy());
+        display.render(game.wonBy());
     }
 
     private int askForBoardSize() {
-        System.out.println(display.enterBoardSizeMessage());
+        display.render(display.enterBoardSizeMessage());
         return GameInput.boardSize(input, display);
     }
 
     private Player askToCreatePlayer(String marker) {
-        System.out.println(display.playerSelectionMessage());
+        display.render(display.playerSelectionMessage());
         int playerType = GameInput.playerSelection(input, display);
         return  playerFactory.createPlayer(playerType, marker, input);
     }
