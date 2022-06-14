@@ -8,8 +8,8 @@ public class PlayerFactory {
     public Player createPlayer(int selection, String marker, Scanner sc) {
         return switch (selection) {
             case 1 -> new Human(marker, sc);
-            case 2 -> new Computer(marker, sc);
-            default ->  new RandomComputer(marker, sc);
+            case 2 -> new Computer(marker);
+            default ->  new RandomComputer(marker);
         };
     }
 }

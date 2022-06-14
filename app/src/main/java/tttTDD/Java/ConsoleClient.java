@@ -20,14 +20,6 @@ public class ConsoleClient {
         setUpGame();
     }
 
-    public void setUpConfiguration() {
-        int boardSize = askForBoardSize();
-        Player player1 = askToCreatePlayer();
-        Player player2 = askToCreatePlayer();
-
-        gameConfig = new GameConfiguration(boardSize, player1, player2);
-    }
-
     public void startGame() {
         renderBoard();
         consoleLoop();
@@ -45,16 +37,20 @@ public class ConsoleClient {
         printGameResult();
     }
 
-    public Game getGame() {
-        return this.game;
+    private void setUpConfiguration() {
+        int boardSize = askForBoardSize();
+        Player player1 = askToCreatePlayer("X");
+        Player player2 = askToCreatePlayer("O");
+
+        gameConfig = new GameConfiguration(boardSize, player1, player2);
     }
 
     private void setUpGame() throws Exception{
-        game = new Game(gameConfig, input);
+        game = new Game(gameConfig);
     }
 
     private void performPlayerTurn() {
-        if (game.performTurn(game.getCurrentPlayer())) {
+        if (game.performTurn(game.getCurrentPlayerMove())) {
             printTheMovePerformed(game.getCurrentPlayerPreviousMove());
             renderBoard();
         } else {
@@ -186,20 +182,14 @@ public class ConsoleClient {
         return "Can't have the Universe implode on us. Try a larger number:";
     }
 
-    private Player askToCreatePlayer() {
+    private Player askToCreatePlayer(String marker) {
         int selection = askForPlayerType();
-        String marker = askForMarker();
 
         return  playerFactory.createPlayer(selection, marker, input);
     }
 
     private int askForPlayerType() {
-        System.out.println("What type of player is this?[Enter a number]\n 1. Human\n 2.Computer\n 3. Random Computer\n");
+        System.out.println("What type of player is this?[Enter a number]\n 1. Human\n 2. Computer\n 3. Random Computer\n");
         return playerSelectionInput();
-    }
-
-    private String askForMarker() {
-        System.out.println("What's this player's marker:");
-        return input.next();
     }
 }

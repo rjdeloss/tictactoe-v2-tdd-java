@@ -3,9 +3,10 @@ package tttTDD.Java.doubles;
 import tttTDD.Java.Board;
 import tttTDD.Java.Interfaces.Player;
 
+import java.util.Arrays;
+
 public class TestPlayer implements Player {
     private final String marker;
-    private int previousMove;
     private int[] moves;
 
     public TestPlayer(String marker, int[] moves) {
@@ -25,7 +26,10 @@ public class TestPlayer implements Player {
 
     @Override
     public int move(Board board) {
-        return moves[0];
+        int currentMove = moves[0];
+        moves = Arrays.copyOfRange(moves, 1, moves.length);
+
+        return currentMove;
     }
 
     @Override

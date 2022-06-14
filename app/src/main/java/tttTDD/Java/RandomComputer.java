@@ -2,17 +2,11 @@ package tttTDD.Java;
 
 import tttTDD.Java.Interfaces.Player;
 
-import java.util.Scanner;
-
 public class RandomComputer implements Player {
     private final String marker;
     private int previousMove;
 
     public RandomComputer(String marker) {
-        this.marker = marker;
-    }
-
-    public RandomComputer(String marker, Scanner sc) {
         this.marker = marker;
     }
 

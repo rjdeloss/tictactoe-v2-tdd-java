@@ -11,18 +11,9 @@ public class Game {
     private final Board board;
     private Player player1;
     private Player player2;
-    private Scanner input;
 
 
     public Game(GameConfiguration gameConfig) throws Exception {
-        board = new Board(gameConfig.getBoardSizeConfiguration());
-        initializePlayers(gameConfig);
-        currentPlayer = player1;
-        gameCompleted = false;
-    }
-
-    public Game(GameConfiguration gameConfig, Scanner playerInput) throws Exception {
-        this.input = playerInput;
         board = new Board(gameConfig.getBoardSizeConfiguration());
         initializePlayers(gameConfig);
         currentPlayer = player1;
@@ -49,6 +40,10 @@ public class Game {
         return currentPlayer;
     }
 
+    public int getCurrentPlayerMove() {
+        return currentPlayer.move(board);
+    }
+
     public int getCurrentPlayerPreviousMove() {
         return currentPlayer.getMarker().equals(player1.getMarker()) ? player2.getPreviousMove() : player1.getPreviousMove();
     }
@@ -65,14 +60,8 @@ public class Game {
         return board.getBoard();
     }
 
-    public int getFirstAvailableMove() {
-        return board.getFirstAvailableMove();
-    }
-
-    public boolean performTurn(Player playerMakingMove) {
-        int input = playerMakingMove.move(board);
-
-        if (board.updateBoard(input, playerMakingMove.getMarker())) {
+    public boolean performTurn(int playerMove) {
+        if (board.updateBoard(playerMove, currentPlayer.getMarker())) {
             gameCompleted = gameHasFinished();
             swap();
         } else {

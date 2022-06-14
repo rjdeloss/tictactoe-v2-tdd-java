@@ -30,7 +30,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleSetsUpGameWithDefaultBoardSizeShouldPromptPlayerMultipleTimes() throws Exception {
-        String input = "-1 \n three \n -1 \n 3 3 X 2 O";
+        String input = "-1 \n three \n -1 \n 3 1 2";
         setInput(input);
         console = new ConsoleClient();
 
@@ -40,7 +40,7 @@ public class ConsoleClientTest {
 
     @Test
     public void playerInputShouldPromptAReentryIfTheInputIsNotAValidInput() throws Exception{
-        String input = "three \n 1 \n 2 \n 3 3 X 2 O";
+        String input = "three \n 1 \n 2 \n 3 3 2";
         setInput(input);
         console = new ConsoleClient();
 
@@ -50,7 +50,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleRunnerAskForBoardSizeInput() {
-        String input = "4 3 X 2 O 1 5 2 6 3 7 4";
+        String input = "4 3 2 1 5 2 6 3 7 4";
         setInput(input);
         console = createConsoleWithoutException();
         console.startGame();
@@ -61,7 +61,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleRendersDefaultBoardAfterSelectingGameType() {
-        String input = "3 3 X 2 O 1 3 2 5 4 7";
+        String input = "3 3 2 1 3 2 5 4 7";
         setInput(input);
         console = createConsoleWithoutException();
         console.startGame();
@@ -71,7 +71,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMove() {
-        String input = "3 1 X 2 O 1 4 7";
+        String input = "3 1 2 1 4 7";
         setInput(input);
         console = createConsoleWithoutException();
         console.startGame();
@@ -81,7 +81,7 @@ public class ConsoleClientTest {
 
     @Test
     public void boardShouldUpdateWithPlayerInput() {
-        String input = "3 1 X 2 O 1 3 2 5 4 7";
+        String input = "3 1 2 1 3 2 5 4 7";
         setInput(input);
         console = createConsoleWithoutException();
         console.startGame();
@@ -92,7 +92,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleLoopShouldPromptCurrentPlayerToPerformAMoveAgainIfCellIsTaken() throws Exception {
-        String input = "3 1 X 2 O 1 1 4 7";
+        String input = "3 1 2 1 1 4 7";
         setInput(input);
         console = new ConsoleClient();
         console.startGame();
@@ -102,7 +102,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleShouldRenderAMessageWithTheWinnerOfTheGame() {
-        String input = "3 1 X 2 O 1 4 7";
+        String input = "3 1 2 1 4 7";
         setInput(input);
         console = createConsoleWithoutException();
         console.startGame();
@@ -112,7 +112,7 @@ public class ConsoleClientTest {
 
     @Test
     public void consoleShouldRenderAMessageWhenGameEndsInATie() {
-        String input = "3 1 X 2 O 5 1 2 3 7 4 6 8 9";
+        String input = "3 1 2 5 1 2 3 7 4 6 8 9";
         setInput(input);
         console = createConsoleWithoutException();
         console.startGame();
