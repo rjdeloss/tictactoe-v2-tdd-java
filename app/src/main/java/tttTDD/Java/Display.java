@@ -9,7 +9,7 @@ public class Display {
         System.out.println(message);
     }
 
-    public static String playerSelectionMessage() {
+    public String playerSelectionMessage() {
         return "What type of player is this?[Enter a number]\n 1. Human\n 2. Computer\n 3. Random Computer\n";
     }
 
